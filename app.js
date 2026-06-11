@@ -6,8 +6,8 @@ const supabaseClient = supabase.createClient(
 async function loadMaterials() {
 
     const { data, error } = await supabaseClient
-        .from('materials')
-        .select('*');
+        .from("materials")
+        .select("*");
 
     if (error) {
         console.error(error);
@@ -23,12 +23,13 @@ async function loadMaterials() {
     data.forEach(material => {
 
         tbody.innerHTML += `
-            <tr>
-                <td>${material.material_code}</td>
-                <td>${material.material_name}</td>
-                <td>${material.unit}</td>
-            </tr>
+        <tr>
+            <td>${material.material_code}</td>
+            <td>${material.material_name}</td>
+            <td>${material.unit}</td>
+        </tr>
         `;
 
     });
+
 }
