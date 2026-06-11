@@ -8,21 +8,47 @@
 
 <h1>RVRG Store Management</h1>
 
+<h2>Add Material</h2>
+
+<div>
+    <input type="text" id="materialCode" placeholder="Material Code">
+
+    <input type="text" id="materialName" placeholder="Material Name">
+
+    <select id="departmentId">
+        <option value="">Select Department</option>
+    </select>
+
+    <input type="text" id="unit" placeholder="Unit">
+
+    <input type="number" id="minimumStock" placeholder="Minimum Stock">
+
+    <button onclick="addMaterial()">
+        Save Material
+    </button>
+</div>
+
+<hr>
+
+<h2>Materials List</h2>
+
 <button onclick="loadMaterials()">
-Load Materials
+    Refresh List
 </button>
 
 <br><br>
 
 <table border="1" id="materialsTable">
-<thead>
-<tr>
-<th>Code</th>
-<th>Material</th>
-<th>Unit</th>
-</tr>
-</thead>
-<tbody></tbody>
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Unit</th>
+            <th>Min Stock</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
 </table>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
