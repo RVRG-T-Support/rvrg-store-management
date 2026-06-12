@@ -11,23 +11,56 @@
 <h2>Add Material</h2>
 
 <div>
-    <input type="text" id="materialCode" placeholder="Material Code">
 
-    <input type="text" id="materialName" placeholder="Material Name">
+<select id="departmentId">
+    <option value="">Select Department</option>
+</select>
 
-    <select id="departmentId">
-        <option value="">Select Department</option>
-    </select>
+<input type="text" id="category" placeholder="Category (Optional)">
 
-    <input type="text" id="unit" placeholder="Unit">
+<input type="text" id="materialName" placeholder="Material Name">
 
-    <input type="number" id="minimumStock" placeholder="Minimum Stock">
+<input type="text" id="brand" placeholder="Brand (Optional)">
 
-    <button onclick="addMaterial()">
-        Save Material
-    </button>
+<input type="text" id="itemType" placeholder="Type (Optional)">
+
+<input type="text" id="itemSize" placeholder="Size (Optional)">
+
+<input type="text" id="rating" placeholder="Rating (Optional)">
+
+<input type="text" id="specification" placeholder="Specification (Optional)">
+
+<input type="text" id="rackLocation" placeholder="Rack Location (Optional)">
+
+<input type="text" id="description" placeholder="Description (Optional)">
+
+<select id="unit">
+    <option value="">Select Unit</option>
+    <option>Nos</option>
+    <option>Bag</option>
+    <option>Box</option>
+    <option>Ltr</option>
+    <option>Kg</option>
+    <option>Mtr</option>
+    <option>Sqft</option>
+    <option>Roll</option>
+    <option>Coil</option>
+    <option>Set</option>
+    <option>Pair</option>
+    <option>Pkt</option>
+    <option>Gram</option>
+    <option>ML</option>
+</select>
+
+<input type="number"
+       id="minimumStock"
+       placeholder="Minimum Stock">
+
+<button onclick="addMaterial()">
+    Save Material
+</button>
+
 </div>
-
 <hr>
 
 <h2>Materials List</h2>
