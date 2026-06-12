@@ -39,20 +39,56 @@ async function loadDepartments() {
 
 async function addMaterial() {
 
-    const materialCode =
-        document.getElementById("materialCode").value;
+    const departmentId =
+        document.getElementById("departmentId").value;
+
+    const category =
+        document.getElementById("category").value;
 
     const materialName =
         document.getElementById("materialName").value;
 
-    const departmentId =
-        document.getElementById("departmentId").value;
+    const brand =
+        document.getElementById("brand").value;
+
+    const itemType =
+        document.getElementById("itemType").value;
+
+    const itemSize =
+        document.getElementById("itemSize").value;
+
+    const rating =
+        document.getElementById("rating").value;
+
+    const specification =
+        document.getElementById("specification").value;
+
+    const rackLocation =
+        document.getElementById("rackLocation").value;
+
+    const description =
+        document.getElementById("description").value;
 
     const unit =
         document.getElementById("unit").value;
 
     const minimumStock =
         document.getElementById("minimumStock").value;
+
+    if (!departmentId ||
+        !materialName ||
+        !unit ||
+        !minimumStock) {
+
+        alert(
+            "Department, Material Name, Unit and Minimum Stock are required."
+        );
+
+        return;
+    }
+
+    const materialCode =
+        "TEMP-" + Date.now();
 
     const { error } =
         await supabaseClient
@@ -62,6 +98,16 @@ async function addMaterial() {
                 material_code: materialCode,
                 material_name: materialName,
                 department_id: departmentId,
+
+                category: category,
+                brand: brand,
+                item_type: itemType,
+                item_size: itemSize,
+                rating: rating,
+                specification: specification,
+                rack_location: rackLocation,
+                description: description,
+
                 unit: unit,
                 minimum_stock: minimumStock
             }
@@ -75,9 +121,7 @@ async function addMaterial() {
     alert("Material Saved");
 
     loadMaterials();
-
 }
-
 async function loadMaterials() {
 
     const { data, error } =
