@@ -5,6 +5,7 @@ const supabaseClient = supabase.createClient(
 
 loadDepartments();
 loadMaterials();
+loadStockMaterials();
 
 async function loadDepartments() {
 
@@ -192,5 +193,85 @@ async function loadMaterials() {
         `;
 
     });
+
+}
+async function loadStockMaterials() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("materials")
+        .select("id, material_code, material_name")
+        .order("material_code");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const select =
+        document.getElementById("stockMaterial");
+
+    select.innerHTML =
+        '<option value="">Select Material</option>';
+
+    data.forEach(item => {
+
+        select.innerHTML += `
+            <option value="${item.id}">
+                ${item.material_code}
+                - ${item.material_name}
+            </option>
+        `;
+
+    });
+
+}
+async function addStock() {
+
+    const materialId =
+        document.getElementById("stockMaterial").value;
+
+    const qty =
+        document.getElementById("stockQty").value;
+
+    const referenceNo =
+        document.getElementById("referenceNo").value;
+
+    const remarks =
+        document.getElementById("stockRemarks").value;
+
+    if (!materialId || !qty) {
+
+        alert(
+            "Material and Quantity are required."
+        );
+
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+        .from("stock_ledger")
+        .insert([
+            {
+                material_id: materialId,
+                transaction_type: "STOCK_IN",
+                quantity: qty,
+                reference_no: referenceNo,
+                remarks: remarks,
+                created_by: 1
+            }
+        ]);
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    alert("Stock Added Successfully");
+
+    document.getElementById("stockQty").value = "";
+    document.getElementById("referenceNo").value = "";
+    document.getElementById("stockRemarks").value = "";
 
 }
