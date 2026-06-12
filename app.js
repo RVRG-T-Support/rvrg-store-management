@@ -271,3 +271,35 @@ async function addStock() {
     document.getElementById("stockRemarks").value = "";
 
 }
+async function loadLowStock() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("low_stock_alerts")
+        .select("*")
+        .order("material_code");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const tbody =
+        document.querySelector("#lowStockTable tbody");
+
+    tbody.innerHTML = "";
+
+    data.forEach(item => {
+
+        tbody.innerHTML += `
+        <tr>
+            <td>${item.material_code}</td>
+            <td>${item.material_name}</td>
+            <td>${item.current_stock}</td>
+            <td>${item.minimum_stock}</td>
+        </tr>
+        `;
+
+    });
+
+}
