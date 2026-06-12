@@ -305,3 +305,126 @@ async function loadLowStock() {
     });
 
 }
+
+async function loadTechnicians() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("technicians")
+        .select("*")
+        .order("technician_name");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const select =
+        document.getElementById("technicianId");
+
+    select.innerHTML =
+        '<option value="">Select Technician</option>';
+
+    data.forEach(item => {
+
+        select.innerHTML += `
+            <option value="${item.id}">
+                ${item.technician_name}
+            </option>
+        `;
+
+    });
+
+}
+
+async function loadRequestMaterials() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("materials")
+        .select("id, material_code, material_name")
+        .order("material_code");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const select =
+        document.getElementById("requestMaterial");
+
+    select.innerHTML =
+        '<option value="">Select Material</option>';
+
+    data.forEach(item => {
+
+        select.innerHTML += `
+            <option value="${item.id}">
+                ${item.material_code}
+                - ${item.material_name}
+            </option>
+        `;
+
+    });
+
+}
+
+async function submitRequest() {
+
+    const ticketNo =
+        document.getElementById("ticketNo").value;
+
+    const locationType =
+        document.getElementById("locationType").value;
+
+    const locationName =
+        document.getElementById("locationName").value;
+
+    const technicianId =
+        document.getElementById("technicianId").value;
+
+    const materialId =
+        document.getElementById("requestMaterial").value;
+
+    const requestedQty =
+        document.getElementById("requestedQty").value;
+
+    const remarks =
+        document.getElementById("requestRemarks").value;
+
+    if (!ticketNo ||
+        !locationType ||
+        !locationName ||
+        !technicianId ||
+        !materialId ||
+        !requestedQty) {
+
+        alert("Please fill all required fields.");
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+        .from("material_requests")
+        .insert([
+            {
+                ticket_no: ticketNo,
+                location_type: locationType,
+                location_name: locationName,
+                technician_id: technicianId,
+                material_id: materialId,
+                requested_qty: requestedQty,
+                remarks: remarks,
+                request_status: "PENDING",
+                requested_by: 1
+            }
+        ]);
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    alert("Request Submitted");
+
+}
