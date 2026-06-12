@@ -6,6 +6,7 @@ const supabaseClient = supabase.createClient(
 loadDepartments();
 loadMaterials();
 loadStockMaterials();
+loadLowStock();
 
 async function loadDepartments() {
 
