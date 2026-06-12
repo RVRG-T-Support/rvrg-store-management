@@ -161,13 +161,8 @@ async function loadMaterials() {
 
     const { data, error } =
         await supabaseClient
-        .from("materials")
-        .select(`
-            *,
-            departments (
-                department_name
-            )
-        `)
+        .from("current_stock")
+        .select("*")
         .order("material_code");
 
     if (error) {
@@ -186,7 +181,8 @@ async function loadMaterials() {
         <tr>
             <td>${material.material_code}</td>
             <td>${material.material_name}</td>
-            <td>${material.departments.department_name}</td>
+            <td>${material.department_name}</td>
+            <td>${material.current_stock}</td>
             <td>${material.unit}</td>
             <td>${material.minimum_stock}</td>
         </tr>
@@ -194,8 +190,7 @@ async function loadMaterials() {
 
     });
 
-}
-async function loadStockMaterials() {
+}async function loadStockMaterials() {
 
     const { data, error } =
         await supabaseClient
