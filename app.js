@@ -7,6 +7,8 @@ loadDepartments();
 loadMaterials();
 loadStockMaterials();
 loadLowStock();
+loadTechnicians();
+loadRequestMaterials();
 
 async function loadDepartments() {
 
