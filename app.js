@@ -87,8 +87,42 @@ async function addMaterial() {
         return;
     }
 
-    const materialCode =
-        "TEMP-" + Date.now();
+    const { data: deptData } =
+    await supabaseClient
+    .from("departments")
+    .select("prefix")
+    .eq("id", departmentId)
+    .single();
+
+const prefix = deptData.prefix;
+
+const { data: existingMaterials } =
+    await supabaseClient
+    .from("materials")
+    .select("material_code")
+    .like("material_code", prefix + "-%");
+
+let nextNumber = 1;
+
+if (existingMaterials.length > 0) {
+
+    const numbers =
+        existingMaterials.map(item => {
+
+            const parts =
+                item.material_code.split("-");
+
+            return parseInt(parts[1]) || 0;
+
+        });
+
+    nextNumber =
+        Math.max(...numbers) + 1;
+}
+
+const materialCode =
+    prefix + "-" +
+    String(nextNumber).padStart(3, "0");
 
     const { error } =
         await supabaseClient
