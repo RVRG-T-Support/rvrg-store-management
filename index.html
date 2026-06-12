@@ -104,6 +104,44 @@
 
 <hr>
 
+<h2>Material Request</h2>
+
+<input type="text"
+       id="ticketNo"
+       placeholder="Ticket No">
+
+<select id="locationType">
+    <option value="">Select Location Type</option>
+    <option value="FLAT">Flat</option>
+    <option value="COMMON AREA">Common Area</option>
+</select>
+
+<input type="text"
+       id="locationName"
+       placeholder="Location Name">
+
+<select id="technicianId">
+    <option value="">Select Technician</option>
+</select>
+
+<select id="requestMaterial">
+    <option value="">Select Material</option>
+</select>
+
+<input type="number"
+       id="requestedQty"
+       placeholder="Requested Quantity">
+
+<input type="text"
+       id="requestRemarks"
+       placeholder="Remarks">
+
+<button onclick="submitRequest()">
+    Submit Request
+</button>
+
+<hr>
+
 <h2>Materials List</h2>
 
 <button onclick="loadMaterials()">
