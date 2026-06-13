@@ -1,40 +1,126 @@
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>RVRG - Issue Material</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+loadApprovedRequests();
 
-<h1>Issue Material</h1>
+async function loadApprovedRequests() {
 
-<a href="index.html">Dashboard</a>
+    const { data, error } =
+        await supabaseClient
+        .from("material_requests")
+        .select(`
+            *,
+            materials (
+                material_code,
+                material_name
+            )
+        `)
+        .eq("request_status", "APPROVED")
+        .order("created_at");
 
-<hr>
+    if (error) {
+        console.error(error);
+        return;
+    }
 
-<h2>Approved Requests</h2>
+    const tbody =
+        document.querySelector("#issueTable tbody");
 
-<table border="1" id="issueTable">
+    tbody.innerHTML = "";
 
-    <thead>
+    data.forEach(req => {
+
+        tbody.innerHTML += `
         <tr>
-            <th>Ticket</th>
-            <th>Location</th>
-            <th>Material</th>
-            <th>Requested</th>
-            <th>Issue Qty</th>
-            <th>Action</th>
+
+            <td>${req.ticket_no}</td>
+
+            <td>${req.location_name}</td>
+
+            <td>
+                ${req.materials.material_code}
+                -
+                ${req.materials.material_name}
+            </td>
+
+            <td>${req.requested_qty}</td>
+
+            <td>
+                <input
+                    type="number"
+                    id="issue_${req.id}"
+                    value="${req.requested_qty}">
+            </td>
+
+            <td>
+
+                <button
+                    onclick="issueMaterial(${req.id},
+                    ${req.material_id})">
+
+                    Issue
+
+                </button>
+
+            </td>
+
         </tr>
-    </thead>
+        `;
 
-    <tbody></tbody>
+    });
 
-</table>
+}
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="issue.js"></script>
+async function issueMaterial(
+    requestId,
+    materialId
+) {
 
-</body>
-</html>
+    const issueQty =
+        document.getElementById(
+            `issue_${requestId}`
+        ).value;
+
+    const { error: ledgerError } =
+        await supabaseClient
+        .from("stock_ledger")
+        .insert([
+            {
+                material_id: materialId,
+                transaction_type: "ISSUE",
+                quantity: issueQty,
+                request_id: requestId,
+                created_by: 1
+            }
+        ]);
+
+    if (ledgerError) {
+
+        alert(ledgerError.message);
+        return;
+
+    }
+
+    const { error: requestError } =
+        await supabaseClient
+        .from("material_requests")
+        .update({
+            request_status: "ISSUED",
+            issued_qty: issueQty
+        })
+        .eq("id", requestId);
+
+    if (requestError) {
+
+        alert(requestError.message);
+        return;
+
+    }
+
+    alert("Material Issued");
+
+    loadApprovedRequests();
+
+}
