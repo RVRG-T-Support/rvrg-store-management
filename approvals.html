@@ -1,1 +1,40 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RVRG - Approvals</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Approval Dashboard</h1>
+
+<a href="index.html">Dashboard</a>
+
+<hr>
+
+<h2>Pending Requests</h2>
+
+<table border="1" id="pendingTable">
+
+    <thead>
+        <tr>
+            <th>Ticket No</th>
+            <th>Location</th>
+            <th>Material</th>
+            <th>Qty</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="approvals.js"></script>
+
+</body>
+</html>
