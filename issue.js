@@ -93,8 +93,14 @@ async function issueMaterial(
                 quantity: issueQty,
                 request_id: requestId,
                 created_by: 1
-            }
+            }  
         ]);
+    const { data: requestData } =
+        await supabaseClient
+        .from("material_requests")
+        .select("ticket_no")
+        .eq("id", requestId)
+        .single();
 
     if (ledgerError) {
 
