@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RVRG Reports</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Reports</h1>
+
+<a href="index.html">Dashboard</a>
+
+<hr>
+
+<h2>Current Stock Report</h2>
+
+<button onclick="loadCurrentStock()">
+    Refresh Report
+</button>
+
+<table border="1" id="stockReportTable">
+
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Material</th>
+            <th>Department</th>
+            <th>Stock</th>
+            <th>Unit</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="reports.js"></script>
+
+</body>
+</html>
