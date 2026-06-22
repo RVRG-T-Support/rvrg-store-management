@@ -45,6 +45,8 @@ async function loadCurrentStock() {
 
     });
 
+}
+
 async function loadStockMovement() {
 
     const fromDate =
