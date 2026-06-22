@@ -29,23 +29,18 @@ async function loadCurrentStock() {
 
         tbody.innerHTML += `
         <tr>
-
             <td>${item.material_code}</td>
-
             <td>${item.material_name}</td>
-
             <td>${item.department_name}</td>
-
             <td>${item.current_stock}</td>
-
             <td>${item.unit}</td>
-
         </tr>
         `;
 
     });
 
 }
+
 async function loadStockMovement() {
 
     const fromDate =
@@ -93,13 +88,13 @@ async function loadStockMovement() {
 
         tbody.innerHTML += `
         <tr>
-
             <td>${item.transaction_date}</td>
 
             <td>
-                ${item.materials.material_code}
-                -
-                ${item.materials.material_name}
+                ${item.materials ?
+                    item.materials.material_code + " - " +
+                    item.materials.material_name
+                    : ""}
             </td>
 
             <td>${item.transaction_type}</td>
