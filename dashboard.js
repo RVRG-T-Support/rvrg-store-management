@@ -1,4 +1,4 @@
-const supabaseClient = supabase.createClient(
+const dashboardClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
@@ -8,7 +8,7 @@ loadDashboard();
 async function loadDashboard() {
 
     const { count: materialCount } =
-        await supabaseClient
+        await dashboardClient
         .from("materials")
         .select("*", {
             count: "exact",
@@ -20,7 +20,7 @@ async function loadDashboard() {
     ).innerText = materialCount || 0;
 
     const { count: lowStockCount } =
-        await supabaseClient
+        await dashboardClient
         .from("low_stock_alerts")
         .select("*", {
             count: "exact",
@@ -32,7 +32,7 @@ async function loadDashboard() {
     ).innerText = lowStockCount || 0;
 
     const { count: pendingCount } =
-        await supabaseClient
+        await dashboardClient
         .from("material_requests")
         .select("*", {
             count: "exact",
@@ -45,7 +45,7 @@ async function loadDashboard() {
     ).innerText = pendingCount || 0;
 
     const { count: approvedCount } =
-        await supabaseClient
+        await dashboardClient
         .from("material_requests")
         .select("*", {
             count: "exact",
@@ -58,7 +58,7 @@ async function loadDashboard() {
     ).innerText = approvedCount || 0;
 
     const { count: issuedCount } =
-        await supabaseClient
+        await dashboardClient
         .from("material_requests")
         .select("*", {
             count: "exact",
