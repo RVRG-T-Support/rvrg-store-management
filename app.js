@@ -150,6 +150,7 @@ const materialCode =
                 description: description,
 
                 unit: unit,
+                unit_cost: unitCost,
                 minimum_stock: minimumStock
             }
         ]);
