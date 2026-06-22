@@ -191,6 +191,7 @@ async function loadMaterials() {
             <td>${material.department_name}</td>
             <td>${material.current_stock}</td>
             <td>${material.unit}</td>
+            <td>${material.unit_cost || 0}</td>
             <td>${material.minimum_stock}</td>
         </tr>
         `;
