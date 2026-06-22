@@ -76,6 +76,9 @@ async function addMaterial() {
     const unit =
         document.getElementById("unit").value;
 
+    const unitCost =
+        document.getElementById("unitCost").value || 0;
+
     const minimumStock =
         document.getElementById("minimumStock").value;
 
