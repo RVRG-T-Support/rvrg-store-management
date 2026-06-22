@@ -4,6 +4,7 @@ const dashboardClient = supabase.createClient(
 );
 
 loadDashboard();
+loadInventoryValue();
 
 async function loadDashboard() {
 
@@ -69,5 +70,37 @@ async function loadDashboard() {
     document.getElementById(
         "issuedCount"
     ).innerText = issuedCount || 0;
+
+}
+
+async function loadInventoryValue() {
+
+    const { data, error } =
+        await dashboardClient
+        .from("current_stock")
+        .select(`
+            current_stock,
+            unit_cost
+        `);
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    let totalValue = 0;
+
+    data.forEach(item => {
+
+        totalValue +=
+            (item.current_stock || 0) *
+            (item.unit_cost || 0);
+
+    });
+
+    document.getElementById(
+        "inventoryValue"
+    ).innerText =
+        "₹" + totalValue.toLocaleString();
 
 }
