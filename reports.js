@@ -109,3 +109,37 @@ async function loadStockMovement() {
     });
 
 }
+
+async function exportCurrentStock() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("current_stock")
+        .select("*")
+        .order("material_code");
+
+    if (error) {
+
+        alert(error.message);
+        return;
+
+    }
+
+    const worksheet =
+        XLSX.utils.json_to_sheet(data);
+
+    const workbook =
+        XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "Current Stock"
+    );
+
+    XLSX.writeFile(
+        workbook,
+        "Current_Stock_Report.xlsx"
+    );
+
+}
