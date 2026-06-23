@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Technician Consumption Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Technician Consumption Report</h1>
+
+<button onclick="loadTechnicianConsumption()">
+    Refresh Report
+</button>
+
+<br><br>
+
+<table border="1" id="technicianTable">
+
+    <thead>
+        <tr>
+            <th>Technician</th>
+            <th>Issue Transactions</th>
+            <th>Total Quantity</th>
+            <th>Total Value</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="technician_report.js"></script>
+
+</body>
+</html>
