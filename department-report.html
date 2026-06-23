@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Department Consumption Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Department Consumption Report</h1>
+
+<button onclick="loadDepartmentConsumption()">
+    Refresh Report
+</button>
+
+<br><br>
+
+<table border="1" id="departmentTable">
+
+    <thead>
+
+        <tr>
+            <th>Department</th>
+            <th>Issue Transactions</th>
+            <th>Total Quantity</th>
+            <th>Total Value</th>
+        </tr>
+
+    </thead>
+
+    <tbody></tbody>
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="department_report.js"></script>
+
+</body>
+</html>
