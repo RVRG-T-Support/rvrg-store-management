@@ -433,6 +433,3 @@ async function submitRequest() {
     alert("Request Submitted");
 
 }
-
-
-Version 1.0 Milestone
