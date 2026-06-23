@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Stock Adjustment</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>Stock Adjustment</h1>
+
+<a href="index.html">Dashboard</a>
+
+<hr>
+
+<select id="adjustMaterial">
+
+<option value="">
+Select Material
+</option>
+
+</select>
+
+<select id="adjustType">
+
+<option value="INCREASE">
+Increase
+</option>
+
+<option value="DECREASE">
+Decrease
+</option>
+
+</select>
+
+<input
+type="number"
+id="adjustQty"
+placeholder="Quantity">
+
+<input
+type="text"
+id="adjustReason"
+placeholder="Reason">
+
+<input
+type="text"
+id="adjustRemarks"
+placeholder="Remarks">
+
+<button onclick="saveAdjustment()">
+
+Save Adjustment
+
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="stock_adjustment.js"></script>
+
+</body>
+
+</html>
