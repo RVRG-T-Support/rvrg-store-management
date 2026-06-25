@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Material Ledger</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>Material Ledger</h1>
+
+<a href="index.html">Dashboard</a> |
+<a href="reports.html">Reports</a>
+
+<hr>
+
+<select id="ledgerMaterial">
+<option value="">Select Material</option>
+</select>
+
+<button onclick="loadLedger()">
+View Ledger
+</button>
+
+<br><br>
+
+<table border="1" id="ledgerTable">
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+<th>Transaction</th>
+<th>Quantity</th>
+<th>Reference</th>
+<th>Remarks</th>
+
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="material_ledger.js"></script>
+
+</body>
+
+</html>
