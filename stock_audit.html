@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Stock Audit Report</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>Stock Audit Report</h1>
+
+<a href="index.html">Dashboard</a> |
+<a href="approvals.html">Approvals</a> |
+<a href="issue.html">Issue</a> |
+<a href="return.html">Returns</a> |
+<a href="reports.html">Reports</a> |
+<a href="department_report.html">Department Report</a> |
+<a href="technician_report.html">Technician Report</a> |
+<a href="stock_adjustment.html">Stock Adjustment</a> |
+<a href="material_ledger.html">Material Ledger</a>
+
+<hr>
+
+<button onclick="loadAudit()">
+
+Refresh Report
+
+</button>
+
+<br><br>
+
+<table border="1" id="auditTable">
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+<th>Material</th>
+<th>Transaction</th>
+<th>Quantity</th>
+<th>Reference</th>
+<th>Remarks</th>
+
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="stock_audit.js"></script>
+
+</body>
+
+</html>
