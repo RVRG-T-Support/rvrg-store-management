@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+    <title>Inventory Correction Request</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>Inventory Correction Request</h1>
+
+<a href="index.html">Dashboard</a> |
+<a href="reports.html">Reports</a>
+
+<hr>
+
+<select id="correctionMaterial">
+
+    <option value="">Select Material</option>
+
+</select>
+
+<br><br>
+
+<input
+type="text"
+id="currentStock"
+placeholder="Current Stock"
+readonly>
+
+<br><br>
+
+<select id="correctionType">
+
+    <option value="INCREASE">
+        Increase
+    </option>
+
+    <option value="DECREASE">
+        Decrease
+    </option>
+
+</select>
+
+<br><br>
+
+<input
+type="number"
+id="correctionQty"
+placeholder="Quantity">
+
+<br><br>
+
+<select id="reason">
+
+<option value="">Select Reason</option>
+
+<option>Wrong Stock Entry</option>
+
+<option>Physical Verification Difference</option>
+
+<option>Damaged Material</option>
+
+<option>Duplicate Entry</option>
+
+<option>System Correction</option>
+
+<option>Other</option>
+
+</select>
+
+<br><br>
+
+<input
+type="text"
+id="remarks"
+placeholder="Remarks">
+
+<br><br>
+
+<button onclick="submitCorrection()">
+
+Submit Request
+
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="inventory_correction.js"></script>
+
+</body>
+
+</html>
