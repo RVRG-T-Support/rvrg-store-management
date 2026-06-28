@@ -1,11 +1,16 @@
+const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
 async function loadCorrections() {
 
     const tableBody = document.querySelector("#correctionTable tbody");
 
     tableBody.innerHTML = "";
 
-    const { data, error } = await supabase
-        .from("inventory_correction_requrst")
+    const { data, error } = await client
+        .from("inventory_correction_requrstS")
         .select(`
             *,
             materials(material_name),
