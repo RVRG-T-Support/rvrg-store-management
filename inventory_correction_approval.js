@@ -5,7 +5,7 @@ async function loadCorrections() {
     tableBody.innerHTML = "";
 
     const { data, error } = await supabase
-        .from("inventory_correction")
+        .from("inventory_correction_requrst")
         .select(`
             *,
             materials(material_name),
