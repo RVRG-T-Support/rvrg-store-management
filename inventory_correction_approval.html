@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Correction Approval</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="config.js"></script>
+</head>
+
+<body>
+
+    <h1>Inventory Correction Approval</h1>
+
+    <button onclick="loadCorrections()">
+        Refresh List
+    </button>
+
+    <br><br>
+
+    <table border="1" id="correctionTable" width="100%">
+        <thead>
+
+            <tr>
+
+                <th>ICR No</th>
+
+                <th>Material</th>
+
+                <th>Current Stock</th>
+
+                <th>Type</th>
+
+                <th>Qty</th>
+
+                <th>Reason</th>
+
+                <th>Remarks</th>
+
+                <th>Requested By</th>
+
+                <th>Date</th>
+
+                <th>Approval Comment</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <button onclick="navigateHome()">
+        Dashboard
+    </button>
+
+    <script src="inventory_correction_approval.js"></script>
+
+    <script>
+
+        function navigateHome() {
+            window.location.href = "index.html";
+        }
+
+    </script>
+
+</body>
+
+</html>
