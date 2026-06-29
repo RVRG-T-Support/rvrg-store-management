@@ -140,7 +140,7 @@ async function loadHistory() {
             <td>${
                 item.approved_at
                 ?
-                new Date(item.approved_at).toLocaleDateString()
+                new Date(item.approved_at).toLocaleString()
                 :
                 "-"
             }</td>
