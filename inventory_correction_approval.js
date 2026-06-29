@@ -163,14 +163,160 @@ window.onload = () => {
 
 };
 
-function approveCorrection(id){
+async function approveCorrection(id) {
 
-    alert("M15-03");
+    if (!confirm("Approve this Inventory Correction Request?")) {
+        return;
+    }
+
+    const comment =
+        document.getElementById(`comment_${id}`).value;
+
+    // Get Request
+
+    const { data: request, error: requestError } = await client
+        .from("inventory_correction_requests")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (requestError) {
+
+        alert(requestError.message);
+        return;
+
+    }
+
+    let newStock;
+
+    if (request.correction_type === "INCREASE") {
+
+        newStock =
+            Number(request.current_stock) +
+            Number(request.quantity);
+
+    } else {
+
+        newStock =
+            Number(request.current_stock) -
+            Number(request.quantity);
+
+    }
+
+    // Update Material Stock
+
+    const { error: stockError } = await client
+        .from("materials")
+        .update({
+
+            current_stock: newStock
+
+        })
+        .eq("id", request.material_id);
+
+    if (stockError) {
+
+        alert(stockError.message);
+        return;
+
+    }
+
+    // Stock Ledger Entry
+
+    const { error: ledgerError } = await client
+        .from("stock_ledger")
+        .insert({
+
+            material_id: request.material_id,
+
+            transaction_type: "ADJUSTMENT",
+
+            quantity: request.quantity,
+
+            reference_no: request.icr_number,
+
+            remarks:
+                "Inventory Correction Approved",
+
+            created_by: 1,
+
+            transaction_date:
+                new Date().toISOString().split("T")[0],
+
+            request_id: request.id
+
+        });
+
+    if (ledgerError) {
+
+        alert(ledgerError.message);
+        return;
+
+    }
+
+    // Update Request
+
+    const { error: approveError } = await client
+        .from("inventory_correction_requests")
+        .update({
+
+            request_status: "APPROVED",
+
+            approved_by: "FM",
+
+            approved_at: new Date(),
+
+            approval_comment: comment
+
+        })
+        .eq("id", id);
+
+    if (approveError) {
+
+        alert(approveError.message);
+        return;
+
+    }
+
+    alert("Inventory Correction Approved.");
+
+    loadCorrections();
+
+    loadHistory();
 
 }
 
-function rejectCorrection(id){
+async function rejectCorrection(id) {
 
-    alert("M15-04");
+    const comment =
+        document.getElementById(`comment_${id}`).value;
+
+    const { error } = await client
+        .from("inventory_correction_requests")
+        .update({
+
+            request_status: "REJECTED",
+
+            approved_by: "FM",
+
+            approved_at: new Date(),
+
+            approval_comment: comment
+
+        })
+        .eq("id", id);
+
+    if (error) {
+
+        alert(error.message);
+        return;
+
+    }
+
+    alert("Inventory Correction Rejected.");
+
+    loadCorrections();
+
+    loadHistory();
 
 }
