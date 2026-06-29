@@ -205,22 +205,34 @@ async function approveCorrection(id) {
 
     // Update Material Stock
 
-    const { error: stockError } = await client
-        .from("materials")
-        .update({
+   const { error: ledgerError } = await client
+.from("stock_ledger")
+.insert({
 
-            current_stock: newStock
+    material_id: request.material_id,
 
-        })
-        .eq("id", request.material_id);
+    transaction_type:
+        request.correction_type === "INCREASE"
+        ? "STOCK_IN"
+        : "STOCK_OUT",
 
-    if (stockError) {
+    quantity: request.quantity,
 
-        alert(stockError.message);
-        return;
+    reference_no: request.icr_number,
 
-    }
+    remarks:
+        "Inventory Correction",
 
+    created_by: 1,
+
+    created_at: new Date(),
+
+    transaction_date:
+        new Date().toISOString().split("T")[0],
+
+    request_id: request.id
+
+});
     // Stock Ledger Entry
 
     const { error: ledgerError } = await client
