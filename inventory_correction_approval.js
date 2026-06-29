@@ -12,12 +12,11 @@ async function loadCorrections() {
     const { data, error } = await client
         .from("inventory_correction_requests")
         .select(`
-            *,
-            materials(material_name),
-            users_master(full_name)
+        *,
+        materials(material_name)
         `)
         .eq("request_status", "PENDING")
-        .order("created_at", { ascending: false });
+        .order("requested_at", { ascending:false })
 
     if (error) {
 
@@ -38,17 +37,27 @@ async function loadCorrections() {
 
             <td>${item.current_stock}</td>
 
-            <td>${item.adjustment_type}</td>
+            <td>${item.correction_type}</td>
 
-            <td>${item.adjustment_qty}</td>
+            <td>${item.quantity}</td>
+            
+            <td>
+            ${
+            item.correction_type==="INCREASE"
+            ?
+            Number(item.current_stock)+Number(item.quantity)
+            :
+            Number(item.current_stock)-Number(item.quantity)
+            }
+            </td>
 
             <td>${item.reason}</td>
 
             <td>${item.remarks ?? ""}</td>
 
-            <td>${item.users_master?.full_name ?? ""}</td>
+            <td>${item.requested_by}</td>
 
-            <td>${new Date(item.created_at).toLocaleDateString()}</td>
+            <td>new Date(item.requested_at).toLocaleDateString()}</td>
 
             <td>
 
