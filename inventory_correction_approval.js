@@ -10,7 +10,7 @@ async function loadCorrections() {
     tableBody.innerHTML = "";
 
     const { data, error } = await client
-        .from("inventory_correction_reqursts")
+        .from("inventory_correction_requests")
         .select(`
             *,
             materials(material_name),
