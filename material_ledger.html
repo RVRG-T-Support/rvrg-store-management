@@ -32,6 +32,31 @@
 <option value="">Select Material</option>
 </select>
 
+<input
+type="text"
+id="ledgerSearch"
+placeholder="Reference No">
+
+<select id="ledgerType">
+
+<option value="">All Transactions</option>
+
+<option value="STOCK_IN">Stock In</option>
+
+<option value="STOCK_OUT">Stock Out</option>
+
+<option value="ISSUE">Issue</option>
+
+<option value="RETURN">Return</option>
+
+<option value="ADJUSTMENT">Adjustment</option>
+
+</select>
+
+<button onclick="searchLedger()">
+Search
+</button>
+
 <button onclick="loadLedger()">
 View Ledger
 </button>
