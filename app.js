@@ -1,4 +1,5 @@
 const supabaseClient = supabase.createClient(
+    let currentRole = "ADMIN";
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
@@ -10,6 +11,7 @@ loadLowStock();
 loadTechnicians();
 loadRequestMaterials();
 loadNotifications();
+applyRolePermissions();
 
 async function loadDepartments() {
 
@@ -465,5 +467,31 @@ async function loadNotifications() {
 
     document.getElementById("lowStockCountNotification").innerText =
         lowStockCount ?? 0;
+
+}
+
+function applyRolePermissions() {
+
+    if (currentRole === "ADMIN") {
+
+        return;
+
+    }
+
+    // Hide Approval Pages
+
+    document.querySelectorAll("a").forEach(link => {
+
+        if (
+            link.href.includes("approvals") ||
+            link.href.includes("inventory_correction_approval") ||
+            link.href.includes("stock_audit")
+        ) {
+
+            link.style.display = "none";
+
+        }
+
+    });
 
 }
