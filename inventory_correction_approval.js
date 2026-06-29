@@ -16,7 +16,7 @@ async function loadCorrections() {
             materials(material_name),
             users_master(full_name)
         `)
-        .eq("status", "PENDING")
+        .eq("request_status", "PENDING")
         .order("created_at", { ascending: false });
 
     if (error) {
