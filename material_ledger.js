@@ -112,3 +112,67 @@ async function loadLedger() {
     });
 
 }
+
+async function searchLedger() {
+
+    const materialId =
+        document.getElementById("ledgerMaterial").value;
+
+    if (!materialId) {
+
+        alert("Select Material");
+        return;
+
+    }
+
+    const keyword =
+        document.getElementById("ledgerSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const type =
+        document.getElementById("ledgerType").value;
+
+    let query =
+        supabaseClient
+        .from("stock_ledger")
+        .select("*")
+        .eq("material_id", materialId);
+
+    if (type !== "") {
+
+        query = query.eq(
+            "transaction_type",
+            type
+        );
+
+    }
+
+    const { data, error } =
+        await query.order(
+            "created_at",
+            { ascending: true }
+        );
+
+    if (error) {
+
+        console.error(error);
+        return;
+
+    }
+
+    const filtered =
+        data.filter(item => {
+
+            const ref =
+                (item.reference_no ?? "")
+                .toLowerCase();
+
+            return ref.includes(keyword);
+
+        });
+
+    renderLedger(filtered);
+
+}
