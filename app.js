@@ -9,6 +9,7 @@ loadStockMaterials();
 loadLowStock();
 loadTechnicians();
 loadRequestMaterials();
+loadNotifications();
 
 async function loadDepartments() {
 
@@ -431,5 +432,38 @@ async function submitRequest() {
     }
 
     alert("Request Submitted");
+
+}
+
+async function loadNotifications() {
+
+    // Pending Material Requests
+
+    let { count: requestCount } = await client
+        .from("material_requests")
+        .select("*", { count: "exact", head: true })
+        .eq("request_status", "PENDING");
+
+    document.getElementById("pendingRequestCount").innerText =
+        requestCount ?? 0;
+
+    // Pending Inventory Corrections
+
+    let { count: correctionCount } = await client
+        .from("inventory_correction_requests")
+        .select("*", { count: "exact", head: true })
+        .eq("request_status", "PENDING");
+
+    document.getElementById("pendingCorrectionCount").innerText =
+        correctionCount ?? 0;
+
+    // Low Stock
+
+    let { count: lowStockCount } = await client
+        .from("low_stock_alerts")
+        .select("*", { count: "exact", head: true });
+
+    document.getElementById("lowStockCountNotification").innerText =
+        lowStockCount ?? 0;
 
 }
