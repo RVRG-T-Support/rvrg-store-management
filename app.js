@@ -12,6 +12,7 @@ loadTechnicians();
 loadRequestMaterials();
 loadNotifications();
 applyRolePermissions();
+loadRecentActivities();
 
 async function loadDepartments() {
 
@@ -491,6 +492,57 @@ function applyRolePermissions() {
             link.style.display = "none";
 
         }
+
+    });
+
+}
+
+async function loadRecentActivities() {
+
+    const tableBody =
+        document.querySelector("#recentActivityTable tbody");
+
+    tableBody.innerHTML = "";
+
+    const { data, error } = await supabaseClient
+        .from("stock_ledger")
+        .select(`
+            *,
+            materials(material_name)
+        `)
+        .order("created_at", {
+            ascending: false
+        })
+        .limit(10);
+
+    if (error) {
+
+        console.log(error);
+        return;
+
+    }
+
+    data.forEach(item => {
+
+        tableBody.innerHTML += `
+
+        <tr>
+
+            <td>${new Date(item.created_at).toLocaleString()}</td>
+
+            <td>${item.transaction_type}</td>
+
+            <td>${item.reference_no ?? "-"}</td>
+
+            <td>${item.materials?.material_name ?? "-"}</td>
+
+            <td>${item.quantity}</td>
+
+            <td>${item.remarks ?? ""}</td>
+
+        </tr>
+
+        `;
 
     });
 
