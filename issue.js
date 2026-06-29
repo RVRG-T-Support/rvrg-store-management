@@ -83,11 +83,73 @@ async function issueMaterial(
         ).value;
 
     const { data: requestData, error: requestLookupError } =
-        await supabaseClient
-        .from("material_requests")
-        .select("ticket_no")
-        .eq("id", requestId)
-        .single();
+    await supabaseClient
+    .from("material_requests")
+    .select(`
+        ticket_no,
+        location_name,
+        technician_id,
+        material_id,
+        materials(unit_cost)
+    `)
+    .eq("id", requestId)
+    .single();
+
+    // Save Issue Register
+
+const unitCost =
+    Number(requestData.materials?.unit_cost ?? 0);
+
+const totalCost =
+    Number(issueQty) * unitCost;
+
+const { count } =
+    await supabaseClient
+    .from("material_issue_register")
+    .select("*", {
+        count: "exact",
+        head: true
+    });
+
+const issueNumber =
+    "MI-" +
+    String((count ?? 0) + 1).padStart(5, "0");
+
+const { error: issueRegisterError } =
+    await supabaseClient
+    .from("material_issue_register")
+    .insert({
+
+        issue_number: issueNumber,
+
+        request_id: requestId,
+
+        material_id: materialId,
+
+        ticket_no: requestData.ticket_no,
+
+        location_name: requestData.location_name,
+
+        technician_id: requestData.technician_id,
+
+        issued_qty: issueQty,
+
+        unit_cost: unitCost,
+
+        total_cost: totalCost,
+
+        issued_by: "Store Keeper",
+
+        remarks: "Material Issued"
+
+    });
+
+if (issueRegisterError) {
+
+    alert(issueRegisterError.message);
+    return;
+
+}
 
     if (requestLookupError) {
 
