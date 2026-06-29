@@ -439,7 +439,7 @@ async function loadNotifications() {
 
     // Pending Material Requests
 
-    let { count: requestCount } = await client
+    let { count: requestCount } = await supabaseClient
         .from("material_requests")
         .select("*", { count: "exact", head: true })
         .eq("request_status", "PENDING");
@@ -449,7 +449,7 @@ async function loadNotifications() {
 
     // Pending Inventory Corrections
 
-    let { count: correctionCount } = await client
+    let { count: correctionCount } = await supabaseClient
         .from("inventory_correction_requests")
         .select("*", { count: "exact", head: true })
         .eq("request_status", "PENDING");
@@ -459,7 +459,7 @@ async function loadNotifications() {
 
     // Low Stock
 
-    let { count: lowStockCount } = await client
+    let { count: lowStockCount } = await supabaseClient
         .from("low_stock_alerts")
         .select("*", { count: "exact", head: true });
 
