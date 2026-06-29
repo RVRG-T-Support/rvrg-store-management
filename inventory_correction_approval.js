@@ -235,30 +235,7 @@ async function approveCorrection(id) {
 });
     // Stock Ledger Entry
 
-    const { error: ledgerError } = await client
-        .from("stock_ledger")
-        .insert({
-
-            material_id: request.material_id,
-
-            transaction_type: "ADJUSTMENT",
-
-            quantity: request.quantity,
-
-            reference_no: request.icr_number,
-
-            remarks:
-                "Inventory Correction Approved",
-
-            created_by: 1,
-
-            transaction_date:
-                new Date().toISOString().split("T")[0],
-
-            request_id: request.id
-
-        });
-
+    
     if (ledgerError) {
 
         alert(ledgerError.message);
