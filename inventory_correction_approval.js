@@ -79,19 +79,23 @@ async function loadCorrections() {
 
             </td>
 
-            <td>
+           <td>
 
-                <button onclick="approveCorrection(${item.id})">
-                    Approve
-                </button>
+    <button
+        style="background:#28a745;color:white;border:none;padding:5px 10px;cursor:pointer;"
+        onclick="approveCorrection(${item.id})">
+        Approve
+    </button>
 
-                <br><br>
+    <br><br>
 
-                <button onclick="rejectCorrection(${item.id})">
-                    Reject
-                </button>
+    <button
+        style="background:#dc3545;color:white;border:none;padding:5px 10px;cursor:pointer;"
+        onclick="rejectCorrection(${item.id})">
+        Reject
+    </button>
 
-            </td>
+</td>
 
         </tr>
 
