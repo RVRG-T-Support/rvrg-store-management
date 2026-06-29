@@ -105,33 +105,43 @@ async function submitCorrection() {
 
     }
 
-    const { error } =
-        await supabaseClient
-        .from("inventory_correction_requests")
-        .insert([
-            {
-                material_id: materialId,
-                correction_type: type,
-                quantity: qty,
-                current_stock: currentStock,
-                reason: reason,
-                remarks: remarks,
-                request_status: "PENDING",
-                requested_by: "Store Keeper"
-            }
-        ]);
+    // Generate ICR Number
 
-    if (error) {
+// Generate ICR Number
 
-        alert(error.message);
-        return;
+const { count } = await supabaseClient
+    .from("inventory_correction_requests")
+    .select("*", {
+        count: "exact",
+        head: true
+    });
 
-    }
+const icrNumber =
+    "ICR-" +
+    String((count ?? 0) + 1).padStart(5, "0");
 
-    alert(
-        "Inventory Correction Request Submitted Successfully"
-    );
+// Insert Request
 
-    location.reload();
+await supabaseClient
+    .from("inventory_correction_requests")
+    .insert([
+        {
+            icr_number: icrNumber,
 
-}
+            material_id: materialId,
+
+            correction_type: type,
+
+            quantity: qty,
+
+            current_stock: currentStock,
+
+            reason: reason,
+
+            remarks: remarks,
+
+            request_status: "PENDING",
+
+            requested_by: "Store Keeper"
+        }
+    ]);
