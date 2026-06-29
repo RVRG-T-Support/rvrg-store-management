@@ -5,7 +5,7 @@ const client = supabase.createClient(
 
 async function loadCorrections() {
 
-    const tableBody = document.querySelector("#correctionTable tbody");
+    const tableBody = document.querySelector("#approvalTable tbody");
 
     tableBody.innerHTML = "";
 
