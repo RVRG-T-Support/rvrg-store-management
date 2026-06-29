@@ -1,8 +1,9 @@
 const supabaseClient = supabase.createClient(
-    let currentRole = "ADMIN";
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
+
+let currentRole = "ADMIN";
 
 loadDepartments();
 loadMaterials();
@@ -11,7 +12,6 @@ loadLowStock();
 loadTechnicians();
 loadRequestMaterials();
 loadNotifications();
-applyRolePermissions();
 loadRecentActivities();
 
 async function loadDepartments() {
