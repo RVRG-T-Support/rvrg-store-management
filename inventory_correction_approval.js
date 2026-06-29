@@ -68,7 +68,7 @@ async function loadCorrections() {
 
             <td>${item.requested_by}</td>
 
-            <td>${new Date(item.requested_at).toLocaleDateString()}</td>
+            <td>${new Date(item.requested_at).toLocaleString()}</td>
 
             <td>
 
