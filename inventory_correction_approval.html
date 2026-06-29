@@ -1,78 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
+
     <title>Inventory Correction Approval</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="config.js"></script>
 </head>
 
 <body>
 
-    <h1>Inventory Correction Approval</h1>
+<h1>Inventory Correction Approval</h1>
 
-    <button onclick="loadCorrections()">
-        Refresh List
-    </button>
+<hr>
 
-    <br><br>
+<a href="index.html">Dashboard</a> |
 
-    <table border="1" id="correctionTable" width="100%">
-        <thead>
+<a href="inventory_correction.html">
+Inventory Correction Request
+</a>
 
-            <tr>
+|
 
-                <th>ICR No</th>
+<a href="reports.html">
+Reports
+</a>
 
-                <th>Material</th>
+<hr>
 
-                <th>Current Stock</th>
+<h2>Pending Requests</h2>
 
-                <th>Type</th>
+<button onclick="loadCorrections()">
+Refresh List
+</button>
 
-                <th>Qty</th>
+<br><br>
 
-                <th>Reason</th>
+<table border="1" width="100%" id="approvalTable">
 
-                <th>Remarks</th>
+<thead>
 
-                <th>Requested By</th>
+<tr>
 
-                <th>Date</th>
+<th>ICR No</th>
 
-                <th>Approval Comment</th>
+<th>Material</th>
 
-                <th>Action</th>
+<th>Current Stock</th>
 
-            </tr>
+<th>Type</th>
 
-        </thead>
+<th>Qty</th>
 
-        <tbody>
+<th>New Stock</th>
 
-        </tbody>
+<th>Reason</th>
 
-    </table>
+<th>Requested By</th>
 
-    <br>
+<th>Requested Date</th>
 
-    <button onclick="navigateHome()">
-        Dashboard
-    </button>
+<th>Comment</th>
 
-    <script src="inventory_correction_approval.js"></script>
+<th>Action</th>
 
-    <script>
+</tr>
 
-        function navigateHome() {
-            window.location.href = "index.html";
-        }
+</thead>
 
-    </script>
+<tbody>
+
+</tbody>
+
+</table>
+
+<br>
+
+<hr>
+
+<h2>Approved / Rejected History</h2>
+
+<button onclick="loadHistory()">
+
+Refresh History
+
+</button>
+
+<br><br>
+
+<table border="1" width="100%" id="historyTable">
+
+<thead>
+
+<tr>
+
+<th>ICR No</th>
+
+<th>Material</th>
+
+<th>Status</th>
+
+<th>Approved By</th>
+
+<th>Approved Date</th>
+
+<th>Comment</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="inventory_correction_approval.js"></script>
 
 </body>
 
