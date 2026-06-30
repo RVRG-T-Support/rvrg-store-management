@@ -82,6 +82,31 @@ async function issueMaterial(
             `issue_${requestId}`
         ).value;
 
+    const { data: stockData, error: stockError } =
+    await supabaseClient
+    .from("materials")
+    .select("current_stock")
+    .eq("id", materialId)
+    .single();
+
+if (stockError) {
+
+    alert(stockError.message);
+    return;
+
+}
+
+if (Number(issueQty) > Number(stockData.current_stock)) {
+
+    alert(
+        "Insufficient Stock!\n\nAvailable : "
+        + stockData.current_stock
+    );
+
+    return;
+
+}
+
     const { data: requestData, error: requestLookupError } =
     await supabaseClient
     .from("material_requests")
