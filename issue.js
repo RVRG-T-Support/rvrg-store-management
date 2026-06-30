@@ -84,9 +84,9 @@ async function issueMaterial(
 
     const { data: stockData, error: stockError } =
     await supabaseClient
-    .from("materials")
+    .from("current_stock")
     .select("current_stock")
-    .eq("id", materialId)
+    .eq("material_id", materialId)
     .single();
 
 if (stockError) {
