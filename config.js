@@ -4,11 +4,13 @@ const SUPABASE_ANON_KEY = "sb_publishable_mVD5kA-c8Lzo2Md9yl4g7w_6V7TXaJO";
 
 // ===== USER ROLE =====
 
+// ===== DEVELOPMENT ROLE SWITCHER =====
+
 const CURRENT_USER = {
 
-    name: "Store Keeper",
+    name: "Development User",
 
-    role: "STORE"
+    role: localStorage.getItem("RVRG_ROLE") || "ADMIN"
 
 };
 
