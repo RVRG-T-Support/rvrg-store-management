@@ -3,8 +3,6 @@ const supabaseClient = supabase.createClient(
     SUPABASE_ANON_KEY
 );
 
-let currentRole = "ADMIN";
-
 loadDepartments();
 loadMaterials();
 loadStockMaterials();
@@ -13,6 +11,11 @@ loadTechnicians();
 loadRequestMaterials();
 loadNotifications();
 loadRecentActivities();
+if (typeof applyRolePermissions === "function") {
+
+    applyRolePermissions();
+
+}
 
 async function loadDepartments() {
 
@@ -473,20 +476,31 @@ async function loadNotifications() {
 
 function applyRolePermissions() {
 
-    if (currentRole === "ADMIN") {
+    if (CURRENT_USER.role === "ADMIN") {
 
         return;
 
     }
 
-    // Hide Approval Pages
-
     document.querySelectorAll("a").forEach(link => {
 
+        const page =
+            link.getAttribute("href");
+
         if (
-            link.href.includes("approvals") ||
-            link.href.includes("inventory_correction_approval") ||
-            link.href.includes("stock_audit")
+
+            CURRENT_USER.role === "STORE" && (
+
+                page === "approvals.html" ||
+
+                page === "inventory_correction_approval.html" ||
+
+                page === "stock_adjustment.html" ||
+
+                page === "stock_audit.html"
+
+            )
+
         ) {
 
             link.style.display = "none";
