@@ -17,6 +17,17 @@ if (typeof applyRolePermissions === "function") {
 
 }
 
+function changeRole() {
+
+    const role =
+        document.getElementById("roleSwitcher").value;
+
+    localStorage.setItem("RVRG_ROLE", role);
+
+    alert("Role changed to " + role);
+
+}
+
 async function loadDepartments() {
 
     const { data, error } =
