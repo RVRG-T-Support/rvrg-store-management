@@ -170,3 +170,5 @@ document.getElementById("currentStock").value = "";
 document.getElementById("correctionQty").value = "";
 document.getElementById("reason").value = "";
 document.getElementById("remarks").value = "";
+
+}
