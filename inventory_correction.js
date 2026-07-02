@@ -3,7 +3,13 @@ const supabaseClient = supabase.createClient(
     SUPABASE_ANON_KEY
 );
 
-loadMaterials();
+window.onload = function () {
+
+    console.log("Inventory Correction Loaded");
+
+    loadMaterials();
+
+};
 
 async function loadMaterials() {
 
