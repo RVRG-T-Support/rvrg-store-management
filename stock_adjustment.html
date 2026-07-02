@@ -11,6 +11,18 @@
 
 <body>
 
+    <script>
+if (
+    CURRENT_USER.role === "STORE"
+) {
+
+    alert("Access Denied");
+
+    window.location.href = "index.html";
+
+}
+</script>
+
 <a href="index.html">Dashboard</a> |
 <a href="approvals.html">Approvals</a> |
 <a href="issue.html">Issue</a> |
