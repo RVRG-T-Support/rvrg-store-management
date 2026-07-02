@@ -13,6 +13,19 @@ window.onload = function () {
 
 async function loadMaterials() {
 
+    const select =
+        document.getElementById("correctionMaterial");
+
+    if (!select) {
+
+        console.error("Dropdown 'correctionMaterial' not found.");
+        return;
+
+    }
+
+    select.innerHTML =
+        '<option value="">Loading...</option>';
+
     const { data, error } =
         await supabaseClient
         .from("current_stock")
@@ -27,14 +40,13 @@ async function loadMaterials() {
     if (error) {
 
         console.error(error);
+
+        select.innerHTML =
+            '<option value="">Error Loading Materials</option>';
+
         return;
 
     }
-
-    const select =
-        document.getElementById(
-            "correctionMaterial"
-        );
 
     select.innerHTML =
         '<option value="">Select Material</option>';
@@ -46,10 +58,9 @@ async function loadMaterials() {
             value="${item.material_id}"
             data-stock="${item.current_stock}">
 
-            ${item.material_code} - ${item.material_name}
+            ${item.material_code} - ${item.material_name} (${item.current_stock})
 
-        </option>
-        `;
+        </option>`;
 
     });
 
@@ -128,26 +139,34 @@ const icrNumber =
 
 // Insert Request
 
-await supabaseClient
+const { error } =
+    await supabaseClient
     .from("inventory_correction_requests")
     .insert([
         {
             icr_number: icrNumber,
-
             material_id: materialId,
-
             correction_type: type,
-
             quantity: qty,
-
             current_stock: currentStock,
-
             reason: reason,
-
             remarks: remarks,
-
             request_status: "PENDING",
-
             requested_by: "Store Keeper"
         }
     ]);
+
+if (error) {
+
+    alert(error.message);
+    return;
+
+}
+
+alert("Inventory Correction Request Submitted Successfully.");
+
+document.getElementById("correctionMaterial").value = "";
+document.getElementById("currentStock").value = "";
+document.getElementById("correctionQty").value = "";
+document.getElementById("reason").value = "";
+document.getElementById("remarks").value = "";
