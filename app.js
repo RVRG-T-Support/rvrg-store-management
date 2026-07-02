@@ -24,9 +24,23 @@ function changeRole() {
 
     localStorage.setItem("RVRG_ROLE", role);
 
-    alert("Role changed to " + role);
+    location.reload();
 
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const roleSwitcher =
+        document.getElementById("roleSwitcher");
+
+    if (roleSwitcher) {
+
+        roleSwitcher.value =
+            CURRENT_USER.role;
+
+    }
+
+});
 
 async function loadDepartments() {
 
