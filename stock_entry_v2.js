@@ -330,3 +330,145 @@ async function handleEnter(event, row) {
         .focus();
 
 }
+
+async function saveStockEntry() {
+
+    const supplierName =
+        document.getElementById("supplierName").value.trim();
+
+    const invoiceNo =
+        document.getElementById("invoiceNo").value.trim();
+
+    const invoiceDate =
+        document.getElementById("invoiceDate").value;
+
+    const transportCost =
+        Number(
+            document.getElementById("transportCost").value
+        ) || 0;
+
+    const remarks =
+        document.getElementById("remarks").value.trim();
+
+    if (invoiceNo === "") {
+
+        alert("Please enter Invoice Number.");
+
+        return;
+
+    }
+
+    const rows =
+        document.querySelectorAll(
+            "#stockEntryTable tbody tr"
+        );
+
+    if (rows.length === 0) {
+
+        alert("Please add at least one material.");
+
+        return;
+
+    }
+
+    const { data: headerData, error: headerError } =
+        await supabaseClient
+        .from("stock_entry_header")
+        .insert([
+            {
+                supplier_name: supplierName,
+                invoice_no: invoiceNo,
+                invoice_date: invoiceDate,
+                transport_cost: transportCost,
+                remarks: remarks,
+                created_by: "Store Keeper"
+            }
+        ])
+        .select()
+        .single();
+
+    if (headerError) {
+
+        alert(headerError.message);
+
+        return;
+
+    }
+
+    const stockEntryId =
+        headerData.id;
+
+    for (const row of rows) {
+
+        const material =
+            row.querySelector(".materialSelect");
+
+        const materialId =
+            Number(material.value);
+
+        if (!materialId)
+            continue;
+
+        const qty =
+            Number(
+                row.querySelector(".qty").value
+            );
+
+        const price =
+            Number(
+                row.querySelector(".price").value
+            );
+
+        const gstType =
+            row.querySelector(".gstType").value;
+
+        const gst =
+            Number(
+                row.querySelector(".gst").value
+            );
+
+        const lineTotal =
+            Number(
+                row.querySelector(".lineTotal")
+                .innerText
+                .replace("₹", "")
+            );
+
+        const { error: detailError } =
+            await supabaseClient
+            .from("stock_entry_details")
+            .insert([
+                {
+                    stock_entry_id: stockEntryId,
+
+                    material_id: materialId,
+
+                    quantity: qty,
+
+                    purchase_price: price,
+
+                    gst_type: gstType,
+
+                    gst_percentage: gst,
+
+                    line_total: lineTotal
+                }
+            ]);
+
+        if (detailError) {
+
+            alert(detailError.message);
+
+            return;
+
+        }
+
+    }
+
+    alert(
+        "Invoice Saved Successfully.\n\n" +
+        "Invoice : " + invoiceNo +
+        "\nID : " + stockEntryId
+    );
+
+}
