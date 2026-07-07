@@ -52,7 +52,7 @@ async function addRow() {
 
     });
 
-    tbody.innerHTML += `
+    tbody.insertAdjacentHTML("beforeend", `
 
 <tr id="row${rowCount}">
 
