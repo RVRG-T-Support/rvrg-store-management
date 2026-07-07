@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Stock Entry V2</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>Stock Entry (Invoice Based)</h1>
+
+<a href="index.html">Dashboard</a> |
+<a href="reports.html">Reports</a> |
+<a href="stock_entry_v2.html">Stock Entry V2</a>
+
+<hr>
+
+<h2>Invoice Information</h2>
+
+<table>
+
+<tr>
+
+<td>Supplier Name</td>
+
+<td>
+
+<input
+type="text"
+id="supplierName">
+
+</td>
+
+<td>Invoice No</td>
+
+<td>
+
+<input
+type="text"
+id="invoiceNo">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Invoice Date</td>
+
+<td>
+
+<input
+type="date"
+id="invoiceDate">
+
+</td>
+
+<td>Transport Cost</td>
+
+<td>
+
+<input
+type="number"
+id="transportCost"
+value="0">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Supplier Invoice Amount</td>
+
+<td>
+
+<input
+type="number"
+id="invoiceAmount"
+value="0">
+
+</td>
+
+<td>Remarks</td>
+
+<td>
+
+<input
+type="text"
+id="remarks">
+
+</td>
+
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Items</h2>
+
+<table
+border="1"
+id="stockEntryTable">
+
+<thead>
+
+<tr>
+
+<th>Material</th>
+
+<th>Qty</th>
+
+<th>Purchase Price</th>
+
+<th>GST Type</th>
+
+<th>GST %</th>
+
+<th>Line Total</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<br>
+
+<button
+onclick="addRow()">
+
++ Add Row
+
+</button>
+
+<hr>
+
+<h3>
+
+Items :
+
+<span id="totalItems">
+
+0
+
+</span>
+
+</h3>
+
+<h3>
+
+Total Qty :
+
+<span id="totalQty">
+
+0
+
+</span>
+
+</h3>
+
+<h3>
+
+Material Value :
+
+₹
+
+<span id="materialValue">
+
+0
+
+</span>
+
+</h3>
+
+<h3>
+
+Transport :
+
+₹
+
+<span id="transportDisplay">
+
+0
+
+</span>
+
+</h3>
+
+<h3>
+
+Grand Total :
+
+₹
+
+<span id="grandTotal">
+
+0
+
+</span>
+
+</h3>
+
+<button
+onclick="saveStockEntry()">
+
+SAVE STOCK ENTRY
+
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="stock_entry_v2.js"></script>
+
+</body>
+
+</html>
