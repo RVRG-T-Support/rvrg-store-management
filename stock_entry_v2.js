@@ -166,8 +166,10 @@ onclick="deleteRow(${rowIndex})">
     tbody.insertAdjacentHTML(
         "beforeend",
         html
-    );
+   );
 
+updateSummary();
+    
 }
 
 function materialChanged(row) {
@@ -235,12 +237,6 @@ else {
         (price + (price * gst / 100));
 
 }
-
-    if (gstType === "EXCLUDED") {
-
-        total += total * gst / 100;
-
-    }
 
     tr.querySelector(".lineTotal").innerText =
         "₹" + total.toFixed(2);
