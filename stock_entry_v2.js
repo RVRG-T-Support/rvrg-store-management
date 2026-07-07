@@ -259,7 +259,13 @@ function updateSummary() {
         .querySelectorAll("#stockEntryTable tbody tr")
         .forEach(row => {
 
-            items++;
+            const materialId =
+    row.querySelector(".materialSelect").value;
+
+if (!materialId)
+    return;
+
+items++;
 
             const qty =
                 Number(
