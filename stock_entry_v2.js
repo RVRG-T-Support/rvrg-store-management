@@ -138,6 +138,8 @@ onclick="deleteRow(${rowCount})">
 
 `);
 
-updateSummary();
+function updateSummary() {
+
+    // Will implement in next step
 
 }
