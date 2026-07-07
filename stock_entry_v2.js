@@ -111,7 +111,9 @@ oninput="calculateRow(${rowIndex})">
 
 <td>
 
-<select class="gstType">
+<select
+class="gstType"
+onchange="calculateRow(${rowIndex})">
 
 <option value="INCLUDED">
 
@@ -134,7 +136,8 @@ Excluded
 <input
 type="number"
 class="gst"
-value="18">
+value="18"
+oninput="calculateRow(${rowIndex})">
 
 </td>
 
