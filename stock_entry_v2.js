@@ -94,7 +94,8 @@ ${materialOptions}
 <input
 type="number"
 class="qty"
-value="0">
+value="0"
+oninput="calculateRow(${rowIndex})">
 
 </td>
 
