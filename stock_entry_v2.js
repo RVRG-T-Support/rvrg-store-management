@@ -480,9 +480,63 @@ if (existingInvoice.length > 0) {
     }
 
     alert(
-        "Invoice Saved Successfully.\n\n" +
-        "Invoice : " + invoiceNo +
-        "\nID : " + stockEntryId
-    );
 
-}
+"✅ Stock Entry Saved Successfully\n\n" +
+
+"Invoice : " + invoiceNo +
+
+"\nItems : " + items +
+
+"\nTotal Qty : " + totalQty +
+
+"\nGrand Total : ₹" +
+
+document.getElementById(
+"grandTotal"
+).innerText
+
+);
+
+document.getElementById(
+"supplierName"
+).value = "";
+
+document.getElementById(
+"invoiceNo"
+).value = "";
+
+document.getElementById(
+"transportCost"
+).value = "";
+
+document.getElementById(
+"invoiceAmount"
+).value = "";
+
+document.getElementById(
+"remarks"
+).value = "";
+
+document.querySelector(
+"#stockEntryTable tbody"
+).innerHTML = "";
+
+rowIndex = 0;
+
+updateSummary();
+
+await addRow();
+
+document.getElementById(
+"supplierName"
+).focus();
+
+const items =
+document.getElementById(
+"totalItems"
+).innerText;
+
+const totalQty =
+document.getElementById(
+"totalQty"
+).innerText;
