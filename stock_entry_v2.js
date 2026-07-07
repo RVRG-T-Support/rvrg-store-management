@@ -167,6 +167,26 @@ onclick="deleteRow(${rowIndex})">
 
 function materialChanged(row) {
 
+    const tr =
+        document.getElementById("row" + row);
+
+    const material =
+        tr.querySelector(".materialSelect");
+
+    const option =
+        material.options[material.selectedIndex];
+
+    tr.querySelector(".price").value =
+        option.dataset.price || 0;
+
+    tr.querySelector(".gstType").value =
+        option.dataset.gsttype || "INCLUDED";
+
+    tr.querySelector(".gst").value =
+        option.dataset.gst || 18;
+
+    calculateRow(row);
+
 }
 
 function deleteRow(row) {
@@ -174,5 +194,35 @@ function deleteRow(row) {
     document
         .getElementById("row" + row)
         .remove();
+
+}
+
+function calculateRow(row) {
+
+    const tr =
+        document.getElementById("row" + row);
+
+    const qty =
+        Number(tr.querySelector(".qty").value);
+
+    const price =
+        Number(tr.querySelector(".price").value);
+
+    const gst =
+        Number(tr.querySelector(".gst").value);
+
+    const gstType =
+        tr.querySelector(".gstType").value;
+
+    let total = qty * price;
+
+    if (gstType === "EXCLUDED") {
+
+        total += total * gst / 100;
+
+    }
+
+    tr.querySelector(".lineTotal").innerText =
+        "₹" + total.toFixed(2);
 
 }
