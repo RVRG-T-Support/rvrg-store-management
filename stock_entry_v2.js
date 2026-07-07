@@ -200,6 +200,8 @@ function deleteRow(row) {
         .getElementById("row" + row)
         .remove();
 
+updateSummary();
+
 }
 
 function calculateRow(row) {
@@ -244,5 +246,68 @@ else {
         "₹" + total.toFixed(2);
     
     updateSummary();
+
+}
+
+function updateSummary() {
+
+    let items = 0;
+    let totalQty = 0;
+    let materialValue = 0;
+
+    document
+        .querySelectorAll("#stockEntryTable tbody tr")
+        .forEach(row => {
+
+            items++;
+
+            const qty =
+                Number(
+                    row.querySelector(".qty").value
+                );
+
+            totalQty += qty;
+
+            const value =
+                Number(
+                    row.querySelector(".lineTotal")
+                    .innerText
+                    .replace("₹", "")
+                );
+
+            materialValue += value;
+
+        });
+
+    const transport =
+        Number(
+            document.getElementById(
+                "transportCost"
+            ).value
+        );
+
+    document.getElementById(
+        "totalItems"
+    ).innerText = items;
+
+    document.getElementById(
+        "totalQty"
+    ).innerText = totalQty;
+
+    document.getElementById(
+        "materialValue"
+    ).innerText =
+        materialValue.toFixed(2);
+
+    document.getElementById(
+        "transportDisplay"
+    ).innerText =
+        transport.toFixed(2);
+
+    document.getElementById(
+        "grandTotal"
+    ).innerText =
+        (materialValue + transport)
+        .toFixed(2);
 
 }
