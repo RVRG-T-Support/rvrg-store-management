@@ -219,7 +219,20 @@ function calculateRow(row) {
     const gstType =
         tr.querySelector(".gstType").value;
 
-    let total = qty * price;
+    let total;
+
+if (gstType === "INCLUDED") {
+
+    total = qty * price;
+
+}
+else {
+
+    total =
+        qty *
+        (price + (price * gst / 100));
+
+}
 
     if (gstType === "EXCLUDED") {
 
@@ -229,5 +242,7 @@ function calculateRow(row) {
 
     tr.querySelector(".lineTotal").innerText =
         "₹" + total.toFixed(2);
+    
+    updateSummary();
 
 }
