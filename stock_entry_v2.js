@@ -10,13 +10,13 @@ window.onload = function () {
     document.getElementById("invoiceDate").value =
         new Date().toISOString().split("T")[0];
 
-    document
+    /*document
         .getElementById("transportCost")
         .addEventListener(
             "input",
             updateSummary
         );
-
+*/
     addRow();
 
 };
