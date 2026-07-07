@@ -136,8 +136,8 @@ onclick="deleteRow(${rowCount})">
 
 </tr>
 
-`;
+`);
 
-    updateSummary();
+updateSummary();
 
 }
