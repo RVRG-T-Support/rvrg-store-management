@@ -356,14 +356,22 @@ async function saveStockEntry() {
     const remarks =
         document.getElementById("remarks").value.trim();
 
-    if (invoiceNo === "") {
+   const {
+    data: existingInvoice
+} = await supabaseClient
+.from("stock_entry_header")
+.select("id")
+.eq("invoice_no", invoiceNo);
 
-        alert("Please enter Invoice Number.");
+if (existingInvoice.length > 0) {
 
-        return;
+    alert(
+        "Invoice Number already exists."
+    );
 
-    }
+    return;
 
+}
     const rows =
         document.querySelectorAll(
             "#stockEntryTable tbody tr"
