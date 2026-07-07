@@ -137,7 +137,8 @@ Excluded
 type="number"
 class="gst"
 value="18"
-oninput="calculateRow(${rowIndex})">
+oninput="calculateRow(${rowIndex})"
+onkeydown="handleEnter(event, ${rowIndex})">
 
 </td>
 
@@ -305,5 +306,24 @@ function updateSummary() {
     ).innerText =
         (materialValue + transport)
         .toFixed(2);
+
+}
+
+async function handleEnter(event, row) {
+
+    if (event.key !== "Enter") {
+        return;
+    }
+
+    event.preventDefault();
+
+    await addRow();
+
+    const rows =
+        document.querySelectorAll("#stockEntryTable tbody tr");
+
+    rows[rows.length - 1]
+        .querySelector(".materialSelect")
+        .focus();
 
 }
