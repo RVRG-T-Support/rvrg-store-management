@@ -3,64 +3,87 @@ const supabaseClient = supabase.createClient(
     SUPABASE_ANON_KEY
 );
 
-let rowCount = 0;
+let rowIndex = 0;
 
 window.onload = function () {
 
     document.getElementById("invoiceDate").value =
         new Date().toISOString().split("T")[0];
 
-    /*document
-        .getElementById("transportCost")
-        .addEventListener(
-            "input",
-            updateSummary
-        );
-*/
     addRow();
 
 };
 
+async function loadMaterialOptions() {
+
+    const { data, error } =
+        await supabaseClient
+        .from("materials")
+        .select(`
+            id,
+            material_code,
+            material_name,
+            unit_cost,
+            gst_type,
+            gst_percentage
+        `)
+        .eq("is_active", true)
+        .order("material_code");
+
+    if (error) {
+
+        console.error(error);
+
+        return "";
+
+    }
+
+    let options =
+        '<option value="">Select Material</option>';
+
+    data.forEach(item => {
+
+        options += `
+        <option
+            value="${item.id}"
+            data-price="${item.unit_cost}"
+            data-gsttype="${item.gst_type}"
+            data-gst="${item.gst_percentage}">
+
+            ${item.material_code} - ${item.material_name}
+
+        </option>
+        `;
+
+    });
+
+    return options;
+
+}
+
 async function addRow() {
 
-    rowCount++;
+    rowIndex++;
 
     const tbody =
         document.querySelector(
             "#stockEntryTable tbody"
         );
 
-    const { data } =
-        await supabaseClient
-        .from("materials")
-        .select("id, material_code, material_name")
-        .eq("is_active", true)
-        .order("material_code");
+    const materialOptions =
+        await loadMaterialOptions();
 
-    let options =
-        '<option value="">Select</option>';
+    const html = `
 
-    data.forEach(item => {
-
-        options += `
-
-        <option value="${item.id}">
-
-            ${item.material_code} - ${item.material_name}
-
-        </option>`;
-
-    });
-
-    tbody.insertAdjacentHTML("beforeend", `
-
-<tr id="row${rowCount}">
+<tr id="row${rowIndex}">
 
 <td>
 
-<select class="material">
+<select
+class="materialSelect"
+onchange="materialChanged(${rowIndex})">
 
-${options}
+${materialOptions}
 
 </select>
 
@@ -71,8 +94,7 @@ ${options}
 <input
 type="number"
 class="qty"
-value="0"
-oninput="calculateRow(${rowCount})">
+value="0">
 
 </td>
 
@@ -81,15 +103,13 @@ oninput="calculateRow(${rowCount})">
 <input
 type="number"
 class="price"
-value="0"
-oninput="calculateRow(${rowCount})">
+value="0">
 
 </td>
 
 <td>
 
-<select class="gstType"
-onchange="calculateRow(${rowCount})">
+<select class="gstType">
 
 <option value="INCLUDED">
 
@@ -112,8 +132,7 @@ Excluded
 <input
 type="number"
 class="gst"
-value="18"
-oninput="calculateRow(${rowCount})">
+value="18">
 
 </td>
 
@@ -126,7 +145,8 @@ oninput="calculateRow(${rowCount})">
 <td>
 
 <button
-onclick="deleteRow(${rowCount})">
+type="button"
+onclick="deleteRow(${rowIndex})">
 
 ❌
 
@@ -136,10 +156,23 @@ onclick="deleteRow(${rowCount})">
 
 </tr>
 
-`);
+`;
 
-function updateSummary() {
+    tbody.insertAdjacentHTML(
+        "beforeend",
+        html
+    );
 
-    // Will implement in next step
+}
+
+function materialChanged(row) {
+
+}
+
+function deleteRow(row) {
+
+    document
+        .getElementById("row" + row)
+        .remove();
 
 }
