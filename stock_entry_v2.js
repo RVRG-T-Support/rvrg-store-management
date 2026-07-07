@@ -104,7 +104,8 @@ oninput="calculateRow(${rowIndex})">
 <input
 type="number"
 class="price"
-value="0">
+value="0"
+oninput="calculateRow(${rowIndex})">
 
 </td>
 
