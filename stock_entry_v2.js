@@ -353,6 +353,27 @@ async function saveStockEntry() {
             document.getElementById("transportCost").value
         ) || 0;
 
+    const invoiceAmount =
+    Number(
+        document.getElementById("invoiceAmount").value
+    ) || 0;
+
+if (invoiceAmount <= 0) {
+
+    alert("Supplier Invoice Amount must be greater than zero.");
+
+    return;
+
+}
+
+if (transportCost < 0) {
+
+    alert("Transport Cost cannot be negative.");
+
+    return;
+
+}
+
     const remarks =
         document.getElementById("remarks").value.trim();
 if (invoiceNo === "") {
@@ -453,6 +474,37 @@ if (existingInvoice.length > 0) {
                 .innerText
                 .replace("₹", "")
             );
+        if (qty <= 0) {
+
+    alert("Quantity must be greater than zero.");
+
+    return;
+
+}
+
+if (price <= 0) {
+
+    alert("Purchase Price must be greater than zero.");
+
+    return;
+
+}
+
+if (gst < 0) {
+
+    alert("GST cannot be negative.");
+
+    return;
+
+}
+
+if (lineTotal <= 0) {
+
+    alert("Invalid Line Total.");
+
+    return;
+
+}
 
         const { error: detailError } =
             await supabaseClient
