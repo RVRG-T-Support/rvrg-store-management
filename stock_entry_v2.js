@@ -96,7 +96,7 @@ type="number"
 class="qty"
 min="0"
 step="1"
-placeholder="0"
+placeholder="Qty"
 onfocus="this.select()"
 oninput="calculateRow(${rowIndex})">
 
@@ -109,7 +109,7 @@ type="number"
 class="price"
 min="0"
 step="0.01"
-placeholder="0"
+placeholder="Price"
 onfocus="this.select()"
 oninput="calculateRow(${rowIndex})">
 </td>
@@ -354,48 +354,10 @@ async function saveStockEntry() {
     const invoiceDate =
         document.getElementById("invoiceDate").value;
 
-    const transportCost =
-        Number(
-            document.getElementById("transportCost").value
-        ) || 0;
-    if (invoiceAmount <= 0) {
-
-    alert("Supplier Invoice Amount must be greater than 0.");
-
-    document.getElementById("invoiceAmount").focus();
-
-    return;
-
-}
-
-if (transportCost < 0) {
-
-    alert("Transport Cost cannot be negative.");
-
-    document.getElementById("transportCost").focus();
-
-    return;
-
-}
-
-    const invoiceAmount =
+   const qty =
     Number(
-        document.getElementById("invoiceAmount").value
-    ) || 0;
-
-if (invoiceAmount <= 0) {
-
-    alert("Supplier Invoice Amount must be greater than zero.");
-
-    return;
-
-}
-
-if (transportCost < 0) {
-
-    alert("Transport Cost cannot be negative.");
-
-    return;
+        row.querySelector(".qty").value
+    );
 
 }
 
@@ -475,15 +437,57 @@ if (existingInvoice.length > 0) {
         if (!materialId)
             continue;
 
-        const qty =
-            Number(
-                row.querySelector(".qty").value
-            );
+        const qtyInput =
+    row.querySelector(".qty");
 
-        const price =
-            Number(
-                row.querySelector(".price").value
-            );
+        const qty =
+    Number(qtyInput.value);
+
+    if (qtyInput.value.trim() === "") {
+
+    alert("Please enter Quantity.");
+
+    qtyInput.focus();
+
+    return;
+
+    }
+
+    if (qty <= 0) {
+
+    alert("Quantity must be greater than 0.");
+
+    qtyInput.focus();
+
+    return;
+
+    }
+
+        const priceInput =
+    row.querySelector(".price");
+
+    const price =
+    Number(priceInput.value);
+
+    if (priceInput.value.trim() === "") {
+
+    alert("Please enter Purchase Price.");
+
+    priceInput.focus();
+
+    return;
+
+    }
+    
+    if (price <= 0) {
+
+    alert("Purchase Price must be greater than 0.");
+
+    priceInput.focus();
+    
+    return;
+
+    }
 
         const gstType =
             row.querySelector(".gstType").value;
