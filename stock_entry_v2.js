@@ -355,7 +355,13 @@ async function saveStockEntry() {
 
     const remarks =
         document.getElementById("remarks").value.trim();
+if (invoiceNo === "") {
 
+    alert("Please enter Invoice Number.");
+
+    return;
+
+}
    const {
     data: existingInvoice
 } = await supabaseClient
@@ -479,11 +485,25 @@ if (existingInvoice.length > 0) {
 
     }
 
+    const items =
+document.getElementById(
+"totalItems"
+).innerText;
+
+const totalQty =
+document.getElementById(
+"totalQty"
+).innerText;
+
     alert(
 
 "✅ Stock Entry Saved Successfully\n\n" +
 
 "Invoice : " + invoiceNo +
+
+"\nItems : " + items +
+
+"\nTotal Qty : " + totalQty +
 
 "\nGrand Total : ₹" +
 
@@ -526,15 +546,5 @@ await addRow();
 document.getElementById(
 "supplierName"
 ).focus();
-
-const items =
-document.getElementById(
-"totalItems"
-).innerText;
-
-const totalQty =
-document.getElementById(
-"totalQty"
-).innerText;
 
 }
