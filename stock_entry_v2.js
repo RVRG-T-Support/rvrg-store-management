@@ -482,6 +482,29 @@ if (existingInvoice.length > 0) {
             return;
 
         }
+    await supabaseClient
+.from("stock_ledger")
+.insert([
+    {
+
+        material_id: materialId,
+
+        transaction_type: "STOCK_IN",
+
+        quantity: qty,
+
+        transaction_date: invoiceDate,
+
+        reference_no: invoiceNo,
+
+        remarks:
+            "Stock Entry",
+
+        created_by:
+            "Store Keeper"
+
+    }
+]);
 
     }
 
