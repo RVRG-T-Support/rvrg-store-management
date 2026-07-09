@@ -485,10 +485,6 @@ if (existingInvoice.length > 0) {
 
 "Invoice : " + invoiceNo +
 
-"\nItems : " + items +
-
-"\nTotal Qty : " + totalQty +
-
 "\nGrand Total : ₹" +
 
 document.getElementById(
@@ -540,3 +536,5 @@ const totalQty =
 document.getElementById(
 "totalQty"
 ).innerText;
+
+}
