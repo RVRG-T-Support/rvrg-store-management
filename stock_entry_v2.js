@@ -94,7 +94,11 @@ ${materialOptions}
 <input
 type="number"
 class="qty"
-min="0"
+Qty:
+min="1"
+
+Price:
+min="0.01"
 step="1"
 placeholder="Qty"
 onfocus="this.select()"
