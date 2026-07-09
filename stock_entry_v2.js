@@ -358,6 +358,25 @@ async function saveStockEntry() {
         Number(
             document.getElementById("transportCost").value
         ) || 0;
+    if (invoiceAmount <= 0) {
+
+    alert("Supplier Invoice Amount must be greater than 0.");
+
+    document.getElementById("invoiceAmount").focus();
+
+    return;
+
+}
+
+if (transportCost < 0) {
+
+    alert("Transport Cost cannot be negative.");
+
+    document.getElementById("transportCost").focus();
+
+    return;
+
+}
 
     const invoiceAmount =
     Number(
@@ -480,9 +499,12 @@ if (existingInvoice.length > 0) {
                 .innerText
                 .replace("₹", "")
             );
+        
         if (qty <= 0) {
 
-    alert("Quantity must be greater than zero.");
+    alert("Quantity must be greater than 0.");
+
+    row.querySelector(".qty").focus();
 
     return;
 
@@ -490,7 +512,9 @@ if (existingInvoice.length > 0) {
 
 if (price <= 0) {
 
-    alert("Purchase Price must be greater than zero.");
+    alert("Purchase Price must be greater than 0.");
+
+    row.querySelector(".price").focus();
 
     return;
 
@@ -500,13 +524,15 @@ if (gst < 0) {
 
     alert("GST cannot be negative.");
 
+    row.querySelector(".gst").focus();
+
     return;
 
 }
 
 if (lineTotal <= 0) {
 
-    alert("Invalid Line Total.");
+    alert("Line Total must be greater than 0.");
 
     return;
 
