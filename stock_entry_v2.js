@@ -94,6 +94,8 @@ ${materialOptions}
 <input
 type="number"
 class="qty"
+min="0"
+step="1"
 placeholder="0"
 onfocus="this.select()"
 oninput="calculateRow(${rowIndex})">
@@ -105,10 +107,11 @@ oninput="calculateRow(${rowIndex})">
 <input
 type="number"
 class="price"
+min="0"
+step="0.01"
 placeholder="0"
 onfocus="this.select()"
 oninput="calculateRow(${rowIndex})">
-
 </td>
 
 <td>
@@ -138,6 +141,9 @@ Excluded
 <input
 type="number"
 class="gst"
+min="0"
+max="100"
+step="0.01"
 value="18"
 onfocus="this.select()"
 oninput="calculateRow(${rowIndex})"
