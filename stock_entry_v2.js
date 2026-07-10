@@ -545,29 +545,34 @@ if (existingInvoice.length > 0) {
             return;
 
         }
-    await supabaseClient
+await supabaseClient
 .from("stock_ledger")
 .insert([
-    {
-
-        material_id: materialId,
-
-        transaction_type: "STOCK_IN",
-
-        quantity: qty,
-
-        transaction_date: invoiceDate,
-
-        reference_no: invoiceNo,
-
-        remarks:
-            "Stock Entry",
-
-        created_by:
-            "Store Keeper"
-
-    }
+{
+    material_id: materialId,
+    transaction_type: "STOCK_IN",
+    quantity: qty,
+    transaction_date: invoiceDate,
+    reference_no: invoiceNo,
+    remarks: "Stock Entry",
+    created_by: 1
+}
 ]);
+
+    const { data: stockData } =
+await supabaseClient
+.from("current_stock")
+.select("current_stock")
+.eq("material_id", materialId)
+.single();
+
+await supabaseClient
+.from("current_stock")
+.update({
+    current_stock:
+        Number(stockData.current_stock) + qty
+})
+.eq("material_id", materialId);
 
     }
 
