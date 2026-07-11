@@ -370,6 +370,26 @@ const invoiceAmount =
 const remarks =
     document.getElementById("remarks").value.trim();
 
+if (invoiceAmount <= 0) {
+
+    alert("Supplier Invoice Amount must be greater than 0.");
+
+    document.getElementById("invoiceAmount").focus();
+
+    return;
+
+}
+
+if (transportCost < 0) {
+
+    alert("Transport Cost cannot be negative.");
+
+    document.getElementById("transportCost").focus();
+
+    return;
+
+}
+
 if (invoiceNo === "") {
 
     alert("Please enter Invoice Number.");
@@ -416,7 +436,7 @@ if (existingInvoice.length > 0) {
                 invoice_date: invoiceDate,
                 transport_cost: transportCost,
                 remarks: remarks,
-                created_by: "Store Keeper"
+                created_by: 1
             }
         ])
         .select()
@@ -511,9 +531,6 @@ if (existingInvoice.length > 0) {
                 .replace("₹", "")
             );
         
-   
-
-}
 
         const { error: detailError } =
             await supabaseClient
