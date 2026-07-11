@@ -582,7 +582,6 @@ if (ledgerError) {
     return;
 
 }
-]);
 
     const { data: stockData } =
 await supabaseClient
