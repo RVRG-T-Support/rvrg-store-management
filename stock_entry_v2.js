@@ -560,17 +560,27 @@ if (existingInvoice.length > 0) {
             return;
 
         }
+const { error: ledgerError } =
 await supabaseClient
 .from("stock_ledger")
 .insert([
-{
-    material_id: materialId,
-    transaction_type: "STOCK_IN",
-    quantity: qty,
-    transaction_date: invoiceDate,
-    reference_no: invoiceNo,
-    remarks: "Stock Entry",
-    created_by: 1
+    {
+        material_id: materialId,
+        transaction_type: "STOCK_IN",
+        quantity: qty,
+        transaction_date: invoiceDate,
+        reference_no: invoiceNo,
+        remarks: "Stock Entry",
+        created_by: 1
+    }
+]);
+
+if (ledgerError) {
+
+    alert(ledgerError.message);
+
+    return;
+
 }
 ]);
 
@@ -581,6 +591,7 @@ await supabaseClient
 .eq("material_id", materialId)
 .single();
 
+const { error: stockUpdateError } =
 await supabaseClient
 .from("current_stock")
 .update({
@@ -589,7 +600,14 @@ await supabaseClient
 })
 .eq("material_id", materialId);
 
-    }
+if (stockUpdateError) {
+
+    alert(stockUpdateError.message);
+
+    return;
+
+}
+}
 
     const items =
 document.getElementById(
