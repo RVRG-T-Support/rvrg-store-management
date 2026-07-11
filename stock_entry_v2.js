@@ -370,8 +370,6 @@ const invoiceAmount =
 const remarks =
     document.getElementById("remarks").value.trim();
 
-    const remarks =
-        document.getElementById("remarks").value.trim();
 if (invoiceNo === "") {
 
     alert("Please enter Invoice Number.");
