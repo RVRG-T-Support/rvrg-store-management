@@ -583,29 +583,6 @@ if (ledgerError) {
 
 }
 
-    const { data: stockData } =
-await supabaseClient
-.from("current_stock")
-.select("current_stock")
-.eq("material_id", materialId)
-.single();
-
-const { error: stockUpdateError } =
-await supabaseClient
-.from("current_stock")
-.update({
-    current_stock:
-        Number(stockData.current_stock) + qty
-})
-.eq("material_id", materialId);
-
-if (stockUpdateError) {
-
-    alert(stockUpdateError.message);
-
-    return;
-
-}
 }
 
     const items =
