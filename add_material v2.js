@@ -165,6 +165,248 @@ async function generateMaterialCode() {
             .padStart(3, "0");
 
 }
+
+// =====================================
+// MAT-04 : VALIDATION
+// =====================================
+
+function validateMaterial() {
+
+    if (
+        document.getElementById("department").value == ""
+    ) {
+
+        alert("Select Department.");
+
+        document.getElementById("department").focus();
+
+        return false;
+
+    }
+
+    if (
+        document.getElementById("materialName")
+        .value.trim() == ""
+    ) {
+
+        alert("Enter Material Name.");
+
+        document.getElementById("materialName").focus();
+
+        return false;
+
+    }
+
+    if (
+        document.getElementById("unit").value == ""
+    ) {
+
+        alert("Select Unit.");
+
+        document.getElementById("unit").focus();
+
+        return false;
+
+    }
+
+    const price =
+        Number(
+            document.getElementById("unitCost").value
+        );
+
+    if (price <= 0) {
+
+        alert("Default Purchase Price must be greater than 0.");
+
+        document.getElementById("unitCost").focus();
+
+        return false;
+
+    }
+
+    const minStock =
+        Number(
+            document.getElementById("minimumStock").value
+        );
+
+    if (minStock < 0) {
+
+        alert("Minimum Stock cannot be negative.");
+
+        document.getElementById("minimumStock").focus();
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+// =====================================
+// MAT-05 : SAVE MATERIAL
+// =====================================
+
+async function saveMaterial() {
+
+    if (!validateMaterial())
+        return;
+
+    const departmentId =
+        document.getElementById("department").value;
+
+    const materialCode =
+        document.getElementById("materialCode").value;
+
+    const materialName =
+        document.getElementById("materialName").value.trim();
+
+    const brand =
+        document.getElementById("brand").value.trim();
+
+    const itemType =
+        document.getElementById("itemType").value.trim();
+
+    const itemSize =
+        document.getElementById("itemSize").value.trim();
+
+    const unit =
+        document.getElementById("unit").value;
+
+    const unitCost =
+        Number(
+            document.getElementById("unitCost").value
+        );
+
+    const gstType =
+        document.getElementById("gstType").value;
+
+    const gstPercentage =
+        Number(
+            document.getElementById("gstPercentage").value
+        );
+
+    const minimumStock =
+        Number(
+            document.getElementById("minimumStock").value
+        );
+
+    const specification =
+        document.getElementById("specification").value.trim();
+    
+    // Duplicate Check===============================
+    
+        const {
+        data: existingMaterial
+    } =
+    await supabaseClient
+    .from("materials")
+    .select("id")
+    .eq("department_id", departmentId)
+    .eq("material_name", materialName)
+    .eq("item_type", itemType)
+    .eq("item_size", itemSize);
+
+    if (existingMaterial.length > 0) {
+
+        alert("Material already exists.");
+
+        return;
+
+    }
+
+    // Insert=============================
+    
+        const {
+        error
+    } =
+    await supabaseClient
+    .from("materials")
+    .insert([
+        {
+
+            department_id: departmentId,
+
+            material_code: materialCode,
+
+            material_name: materialName,
+
+            brand: brand,
+
+            item_type: itemType,
+
+            item_size: itemSize,
+
+            unit: unit,
+
+            unit_cost: unitCost,
+
+            gst_type: gstType,
+
+            gst_percentage: gstPercentage,
+
+            minimum_stock: minimumStock,
+
+            specification: specification,
+
+            is_active: "ACTIVE"
+
+        }
+    ]);
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    alert(
+
+        "✅ Material Saved Successfully\n\n" +
+
+        "Material Code : " +
+
+        materialCode
+
+    );
+
+    resetForm();
+
+}
+
+// =====================================
+// MAT-06 : RESET FORM
+// =====================================
+
+async function resetForm() {
+
+    document.getElementById("materialName").value = "";
+
+    document.getElementById("brand").value = "";
+
+    document.getElementById("itemType").value = "";
+
+    document.getElementById("itemSize").value = "";
+
+    document.getElementById("unit").value = "";
+
+    document.getElementById("unitCost").value = "";
+
+    document.getElementById("gstType").value = "Included";
+
+    document.getElementById("gstPercentage").value = 18;
+
+    document.getElementById("minimumStock").value = "";
+
+    document.getElementById("specification").value = "";
+
+    await generateMaterialCode();
+
+    document.getElementById("materialName").focus();
+
+}
 /*
 
 Reference Map
