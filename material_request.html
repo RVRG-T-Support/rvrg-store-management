@@ -1,0 +1,381 @@
+<!--====================================================
+RVRG STORE MANAGEMENT ENTERPRISE
+--------------------------------------------------------
+Module : M28
+File : material_request.html
+Version : 1.0
+=====================================================-->
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Material Request</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- ===================================== -->
+<!-- MR-01B : NAVIGATION -->
+<!-- ===================================== -->
+
+<a href="index.html">
+
+Dashboard
+
+</a>
+
+>
+
+Transactions
+
+>
+
+Material Request
+
+<hr>
+
+<h1>
+
+MATERIAL REQUEST
+
+</h1>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- MR-01C : REQUEST HEADER -->
+<!-- ===================================== -->
+
+<table>
+
+<tr>
+
+<td>
+
+Request No
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="requestNo"
+readonly>
+
+</td>
+
+<td>
+
+Ticket No *
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="ticketNo">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Request Date
+
+</td>
+
+<td>
+
+<input
+type="date"
+id="requestDate">
+
+</td>
+
+<td>
+
+Priority
+
+</td>
+
+<td>
+
+<select id="priority">
+
+<option>
+
+Low
+
+</option>
+
+<option selected>
+
+Medium
+
+</option>
+
+<option>
+
+High
+
+</option>
+
+<option>
+
+Emergency
+
+</option>
+
+</select>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Location Type
+
+</td>
+
+<td>
+
+<select id="locationType">
+
+<option>
+
+Flat
+
+</option>
+
+<option>
+
+Common Area
+
+</option>
+
+<option>
+
+Club House
+
+</option>
+
+<option>
+
+STP
+
+</option>
+
+<option>
+
+Pump Room
+
+</option>
+
+<option>
+
+DG
+
+</option>
+
+<option>
+
+Electrical Room
+
+</option>
+
+<option>
+
+Other
+
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+Location Name
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="locationName">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Technician
+
+</td>
+
+<td>
+
+<select id="technician">
+
+<option value="">
+
+Select Technician
+
+</option>
+
+</select>
+
+</td>
+
+</tr>
+
+</table>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- MR-01D : ITEMS -->
+<!-- ===================================== -->
+
+<h2>
+
+Items
+
+</h2>
+
+<table
+border="1"
+id="requestTable">
+
+<thead>
+
+<tr>
+
+<th>
+
+Material
+
+</th>
+
+<th>
+
+Qty
+
+</th>
+
+<th>
+
+Remarks
+
+</th>
+
+<th>
+
+Action
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<br>
+
+<button
+onclick="addRow()">
+
++ Add Row
+
+</button>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- MR-01E : SUMMARY -->
+<!-- ===================================== -->
+
+<h3>
+
+Items :
+
+<span id="totalItems">
+
+0
+
+</span>
+
+</h3>
+
+<h3>
+
+Total Qty :
+
+<span id="totalQty">
+
+0
+
+</span>
+
+</h3>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- MR-01F : BUTTONS -->
+<!-- ===================================== -->
+
+<button
+onclick="saveRequest()">
+
+SUBMIT REQUEST
+
+</button>
+
+<button
+onclick="resetRequest()">
+
+RESET
+
+</button>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- MR-01G : SCRIPT -->
+<!-- ===================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="material_request.js"></script>
+
+</body>
+
+</html>
