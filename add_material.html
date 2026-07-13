@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Add Material</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<a href="index.html">Dashboard</a>
+
+>
+
+Masters
+
+>
+
+Add Material
+
+<hr>
+
+<h1>ADD MATERIAL</h1>
+
+<hr>
+
+  <table>
+
+<tr>
+
+<td>
+
+Department *
+
+</td>
+
+<td>
+
+<select id="department">
+
+<option value="">Select Department</option>
+
+</select>
+
+</td>
+
+<td>
+
+Material Code
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="materialCode"
+readonly>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Material Name *
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="materialName">
+
+</td>
+
+<td>
+
+Brand
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="brand">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Type
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="itemType">
+
+</td>
+
+<td>
+
+Size / Capacity
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="itemSize">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Unit *
+
+</td>
+
+<td>
+
+<select id="unit">
+
+<option value="">Select Unit</option>
+
+<option>Nos</option>
+
+<option>Bag</option>
+
+<option>Ltr</option>
+
+<option>Kg</option>
+
+<option>Meter</option>
+
+<option>Box</option>
+
+<option>Packet</option>
+
+<option>Roll</option>
+
+<option>Set</option>
+
+<option>Coil</option>
+
+</select>
+
+</td>
+
+<td>
+
+Default Purchase Price *
+
+</td>
+
+<td>
+
+<input
+type="number"
+id="unitCost"
+min="0"
+placeholder="Price">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+GST Type *
+
+</td>
+
+<td>
+
+<select id="gstType">
+
+<option>Included</option>
+
+<option>Excluded</option>
+
+<option>No GST</option>
+
+</select>
+
+</td>
+
+<td>
+
+GST %
+
+</td>
+
+<td>
+
+<input
+type="number"
+id="gstPercentage"
+value="18"
+min="0"
+max="100">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Minimum Stock *
+
+</td>
+
+<td>
+
+<input
+type="number"
+id="minimumStock"
+min="0"
+placeholder="Minimum Stock">
+
+</td>
+
+<td>
+
+Specification
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="specification">
+
+</td>
+
+</tr>
+
+</table>
+
+<hr>
+
+<button
+onclick="saveMaterial()">
+
+SAVE MATERIAL
+
+</button>
+
+<button
+onclick="resetForm()">
+
+RESET
+
+</button>
+
+<hr>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="add_material.js"></script>
+
+</body>
+
+</html>
