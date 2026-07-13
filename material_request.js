@@ -207,8 +207,10 @@ placeholder="Qty"
 
 min="1"
 
-oninput="updateSummary()">
+oninput="updateSummary()"
 
+onkeydown="qtyEnter(event)"
+>
 </td>
 
 <td>
@@ -296,5 +298,415 @@ r.querySelector(".qty").value
 document.getElementById(
 "totalQty"
 ).innerText=qty;
+
+}
+
+// =====================================
+// MR-07 : VALIDATION
+// =====================================
+
+function validateRequest(){
+
+const ticketNo =
+document.getElementById(
+"ticketNo"
+).value.trim();
+
+if(ticketNo==""){
+
+alert("Please enter Ticket Number.");
+
+document.getElementById(
+"ticketNo"
+).focus();
+
+return false;
+
+}
+
+const technician =
+document.getElementById(
+"technician"
+).value.trim();
+
+if(technician==""){
+
+alert("Please enter Technician Name.");
+
+document.getElementById(
+"technician"
+).focus();
+
+return false;
+
+}
+
+const rows =
+document.querySelectorAll(
+"#requestTable tbody tr"
+);
+
+if(rows.length==0){
+
+alert("Add at least one material.");
+
+return false;
+
+}
+
+for(const row of rows){
+
+const material =
+row.querySelector(".materialSelect");
+
+const qty =
+row.querySelector(".qty");
+
+if(material.value==""){
+
+alert("Please select material.");
+
+material.focus();
+
+return false;
+
+}
+
+if(
+
+qty.value.trim()=="" ||
+
+Number(qty.value)<=0
+
+){
+
+alert("Quantity must be greater than zero.");
+
+qty.focus();
+
+return false;
+
+}
+
+}
+
+return true;
+
+}
+
+// =====================================
+// MR-08 : SAVE REQUEST
+// =====================================
+
+async function saveRequest(){
+
+if(!validateRequest())
+return;
+
+const requestNo =
+document.getElementById(
+"requestNo"
+).value;
+
+const ticketNo =
+document.getElementById(
+"ticketNo"
+).value.trim();
+
+const requestDate =
+document.getElementById(
+"requestDate"
+).value;
+
+const locationType =
+document.getElementById(
+"locationType"
+).value;
+
+const locationName =
+document.getElementById(
+"locationName"
+).value.trim();
+
+const technician =
+document.getElementById(
+"technician"
+).value.trim();
+
+const priority =
+document.getElementById(
+"priority"
+).value;
+const {
+
+data:header,
+
+error:headerError
+
+}
+
+=
+
+await supabaseClient
+
+.from("material_requests")
+
+.insert([
+
+{
+
+request_no:requestNo,
+
+ticket_no:ticketNo,
+
+request_date:requestDate,
+
+location_type:locationType,
+
+location_name:locationName,
+
+technician_name:technician,
+
+priority:priority,
+
+status:"PENDING"
+
+}
+
+])
+
+.select()
+
+.single();
+
+if(headerError){
+
+alert(headerError.message);
+
+return;
+
+}
+
+// =====================================
+// MRJ-08B : SAVE REQUEST DETAILS
+// =====================================
+
+const rows =
+document.querySelectorAll(
+"#requestTable tbody tr"
+);
+
+for(const row of rows){
+
+const materialId =
+Number(
+row.querySelector(".materialSelect").value
+);
+
+const qty =
+Number(
+row.querySelector(".qty").value
+);
+
+const remarks =
+row.querySelector(".remarks")
+.value
+.trim();
+
+const { error: detailError } =
+await supabaseClient
+.from("material_request_details")
+.insert([
+{
+
+request_id:
+header.id,
+
+material_id:
+materialId,
+
+requested_qty:
+qty,
+
+remarks:
+remarks
+
+}
+]);
+
+if(detailError){
+
+alert(detailError.message);
+
+return;
+
+}
+
+}
+// =====================================
+// MRJ-09 : SUCCESS MESSAGE
+// =====================================
+
+const items =
+document.getElementById(
+"totalItems"
+).innerText;
+
+const totalQty =
+document.getElementById(
+"totalQty"
+).innerText;
+
+alert(
+
+"✅ Material Request Submitted\n\n"+
+
+"Request No : "+
+
+requestNo+
+
+"\nTicket No : "+
+
+ticketNo+
+
+"\nItems : "+
+
+items+
+
+"\nTotal Qty : "+
+
+totalQty+
+
+"\nStatus : Pending Approval"
+
+);
+
+await resetRequest();
+
+// =====================================
+// MRJ-10 : RESET FORM
+// =====================================
+
+async function resetRequest(){
+
+document.getElementById(
+"ticketNo"
+).value="";
+
+document.getElementById(
+"locationName"
+).value="";
+
+document.getElementById(
+"technician"
+).value="";
+
+document.getElementById(
+"priority"
+).value="Medium";
+
+document.querySelector(
+"#requestTable tbody"
+).innerHTML="";
+
+rowIndex=0;
+
+updateSummary();
+
+await generateRequestNo();
+
+await addRow();
+
+document.getElementById(
+"ticketNo"
+).focus();
+
+}
+
+// =====================================
+// MRJ-11 : ENTER KEY
+// =====================================
+
+document.addEventListener(
+
+"keydown",
+
+function(e){
+
+if(e.key!="Enter")
+return;
+
+const tag=
+document.activeElement.tagName;
+
+if(
+
+tag!="INPUT" &&
+
+tag!="SELECT"
+
+)
+
+return;
+
+e.preventDefault();
+
+const fields=
+Array.from(
+
+document.querySelectorAll(
+
+"input,select"
+
+)
+
+);
+
+const index=
+fields.indexOf(
+document.activeElement
+);
+
+if(
+
+index>=0 &&
+
+index<fields.length-1
+
+){
+
+fields[index+1].focus();
+
+}
+
+}
+
+);
+
+// =====================================
+// MRJ-12 : AUTO ADD ROW
+// =====================================
+
+async function qtyEnter(e){
+
+if(e.key!="Enter")
+return;
+
+e.preventDefault();
+
+await addRow();
+
+const rows=
+document.querySelectorAll(
+"#requestTable tbody tr"
+);
+
+rows[
+rows.length-1
+]
+.querySelector(
+".materialSelect"
+)
+.focus();
 
 }
