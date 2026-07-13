@@ -42,3 +42,20 @@ material_request.js
 | MR-06 | Validation |
 | MR-07 | Save |
 | MR-08 | Reset |
+
+approval.html
+APH-01A  Header
+APH-01B  Navigation
+APH-01C  Filter Panel
+APH-01D  Pending Requests
+APH-01E  Request Details
+APH-01F  Action Buttons
+APH-01G  Script
+
+approval.js
+APJ-01 Initialization
+APJ-02 Load Pending Requests
+APJ-03 View Details
+APJ-04 Approve
+APJ-05 Reject
+APJ-06 Refresh
