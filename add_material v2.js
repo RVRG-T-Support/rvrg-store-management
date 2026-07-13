@@ -8,6 +8,11 @@ document.addEventListener(
     async () => {
 
         await loadDepartments();
+        document
+            .getElementById(
+                "department"
+            )
+            .focus();
 
         document
             .getElementById("department")
@@ -364,14 +369,25 @@ async function saveMaterial() {
 
     alert(
 
-        "✅ Material Saved Successfully\n\n" +
+"✅ Material Saved Successfully\n\n" +
 
-        "Material Code : " +
+"Material Code : " +
 
-        materialCode
+materialCode +
 
-    );
+"\nDepartment : " +
 
+document.getElementById("department")
+.options[
+document.getElementById("department")
+.selectedIndex
+].text +
+
+"\nMaterial : " +
+
+materialName
+
+);
     resetForm();
 
 }
@@ -407,6 +423,53 @@ async function resetForm() {
     document.getElementById("materialName").focus();
 
 }
+
+// =====================================
+// MAT-07 : ENTER KEY NAVIGATION
+// =====================================
+
+document.addEventListener(
+"keydown",
+
+function(e){
+
+if(e.key !== "Enter")
+return;
+
+const tag =
+document.activeElement.tagName;
+
+if(
+tag !== "INPUT" &&
+tag !== "SELECT"
+)
+return;
+
+e.preventDefault();
+
+const fields =
+Array.from(
+document.querySelectorAll(
+"input, select"
+)
+);
+
+const index =
+fields.indexOf(
+document.activeElement
+);
+
+if(
+index >= 0 &&
+index < fields.length-1
+){
+
+fields[index+1].focus();
+
+}
+
+}
+);
 /*
 
 Reference Map
