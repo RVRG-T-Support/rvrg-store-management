@@ -55,65 +55,10 @@ new Date()
 .toISOString()
 .split("T")[0];
 
-await generateRequestNo();
-
 await addRow();
 
 }
 
-// =====================================
-// MRJ-03 : REQUEST NUMBER
-// =====================================
-
-async function generateRequestNo(){
-
-const {data,error} =
-await supabaseClient
-.from("material_requests")
-.select("request_no")
-.order("request_no",{ascending:false})
-.limit(1);
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-let next = 1;
-
-if(data && data.length>0){
-
-next =
-
-Math.max(
-
-...data.map(r=>
-
-Number(
-
-r.request_no.split("-")[1]
-
-)
-
-)
-
-)+1;
-
-}
-
-document.getElementById(
-"requestNo"
-).value =
-
-"MR-"+
-
-String(next)
-.padStart(6,"0");
-
-}
 // =====================================
 // MR-04 : ADD ROW
 // =====================================
@@ -400,7 +345,7 @@ return true;
 }
 
 // =====================================
-// MR-08 : SAVE REQUEST
+// MRJ-08 : SAVE REQUEST
 // =====================================
 
 async function saveRequest(){
@@ -408,20 +353,10 @@ async function saveRequest(){
 if(!validateRequest())
 return;
 
-const requestNo =
-document.getElementById(
-"requestNo"
-).value;
-
 const ticketNo =
 document.getElementById(
 "ticketNo"
 ).value.trim();
-
-const requestDate =
-document.getElementById(
-"requestDate"
-).value;
 
 const locationType =
 document.getElementById(
@@ -437,62 +372,6 @@ const technician =
 document.getElementById(
 "technician"
 ).value.trim();
-
-const priority =
-document.getElementById(
-"priority"
-).value;
-const {
-
-data:header,
-
-error:headerError
-
-}
-
-=
-
-await supabaseClient
-
-.from("material_requests")
-
-.insert([
-
-{
-
-request_no:requestNo,
-
-ticket_no:ticketNo,
-
-request_date:requestDate,
-
-location_type:locationType,
-
-location_name:locationName,
-
-technician_name:technician,
-
-status:"PENDING"
-
-}
-
-])
-
-.select()
-
-.single();
-
-if(headerError){
-
-alert(headerError.message);
-
-return;
-
-}
-
-// =====================================
-// MRJ-08B : SAVE REQUEST DETAILS
-// =====================================
 
 const rows =
 document.querySelectorAll(
@@ -513,42 +392,42 @@ row.querySelector(".qty").value
 
 const remarks =
 row.querySelector(".remarks")
-.value
-.trim();
+.value.trim();
 
-const { error: detailError } =
+const {error} =
 await supabaseClient
-.from("material_request_details")
+.from("material_requests")
 .insert([
 {
 
-request_id:
-header.id,
+ticket_no:ticketNo,
 
-material_id:
-materialId,
+location_type:locationType,
 
-requested_qty:
-qty,
+location_name:locationName,
 
-remarks:
-remarks
+technician_id:technician,
+
+material_id:materialId,
+
+requested_qty:qty,
+
+remarks:remarks,
+
+status:"PENDING"
 
 }
 ]);
 
-if(detailError){
+if(error){
 
-alert(detailError.message);
+alert(error.message);
 
 return;
 
 }
 
 }
-// =====================================
-// MRJ-09 : SUCCESS MESSAGE
-// =====================================
 
 const items =
 document.getElementById(
@@ -564,28 +443,18 @@ alert(
 
 "✅ Material Request Submitted\n\n"+
 
-"Request No : "+
+"Ticket No : "+ticketNo+
 
-requestNo+
+"\nItems : "+items+
 
-"\nTicket No : "+
-
-ticketNo+
-
-"\nItems : "+
-
-items+
-
-"\nTotal Qty : "+
-
-totalQty+
+"\nTotal Qty : "+totalQty+
 
 "\nStatus : Pending Approval"
 
 );
 
 await resetRequest();
-  
+
 }
 
 // =====================================
