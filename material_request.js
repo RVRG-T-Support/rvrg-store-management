@@ -404,7 +404,7 @@ location_type:locationType,
 
 location_name:locationName,
 
-technician_id:technician,
+technician_name: technician,
 
 material_id:materialId,
 
