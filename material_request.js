@@ -16,8 +16,6 @@ MR-02B Load Technicians
 
 MR-02C Load Materials
 
-MR-03 Generate Request Number
-
 MR-04 Add Row
 
 MR-05 Material Changed
@@ -414,8 +412,6 @@ requested_qty:qty,
 
 remarks:remarks,
 
-status:"PENDING"
-
 }
 ]);
 
@@ -486,8 +482,6 @@ document.querySelector(
 rowIndex=0;
 
 updateSummary();
-
-await generateRequestNo();
 
 await addRow();
 
