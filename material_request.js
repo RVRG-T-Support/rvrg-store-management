@@ -124,7 +124,7 @@ material_code,
 material_name,
 unit
 `)
-.eq("is_active","ACTIVE")
+.eq("is_active", true)
 .order("material_code");
 
 if(error){
