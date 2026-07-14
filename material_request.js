@@ -62,7 +62,7 @@ await addRow();
 }
 
 // =====================================
-// MR-03 : REQUEST NUMBER
+// MRJ-03 : REQUEST NUMBER
 // =====================================
 
 async function generateRequestNo(){
@@ -71,24 +71,30 @@ const {data,error} =
 await supabaseClient
 .from("material_requests")
 .select("request_no")
-.like(
-"request_no",
-"MR-%"
-);
+.order("request_no",{ascending:false})
+.limit(1);
 
-let next=1;
+if(error){
 
-if(data.length>0){
+alert(error.message);
+
+return;
+
+}
+
+let next = 1;
+
+if(data && data.length>0){
 
 next =
+
 Math.max(
 
-...data.map(x=>
+...data.map(r=>
 
 Number(
 
-x.request_no
-.split("-")[1]
+r.request_no.split("-")[1]
 
 )
 
@@ -100,7 +106,7 @@ x.request_no
 
 document.getElementById(
 "requestNo"
-).value=
+).value =
 
 "MR-"+
 
@@ -108,7 +114,6 @@ String(next)
 .padStart(6,"0");
 
 }
-
 // =====================================
 // MR-04 : ADD ROW
 // =====================================
@@ -466,8 +471,6 @@ location_type:locationType,
 location_name:locationName,
 
 technician_name:technician,
-
-priority:priority,
 
 status:"PENDING"
 
