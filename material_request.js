@@ -582,6 +582,8 @@ totalQty+
 );
 
 await resetRequest();
+  
+}
 
 // =====================================
 // MRJ-10 : RESET FORM
