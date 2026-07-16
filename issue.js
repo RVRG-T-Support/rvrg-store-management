@@ -11,12 +11,27 @@ async function loadApprovedRequests() {
         await supabaseClient
         .from("material_requests")
         .select(`
-            *,
-            materials (
-                material_code,
-                material_name
-            )
-        `)
+*,
+
+materials(
+
+material_code,
+
+material_name,
+
+unit_cost,
+
+department_id,
+
+departments(
+
+department_name
+
+)
+
+)
+
+`)
         .eq("request_status", "APPROVED")
         .order("created_at");
 
@@ -33,39 +48,105 @@ async function loadApprovedRequests() {
     data.forEach(req => {
 
         tbody.innerHTML += `
-        <tr>
+        const issuedQty =
+Number(req.issued_qty ?? 0);
 
-            <td>${req.ticket_no}</td>
+const requestedQty =
+Number(req.requested_qty);
 
-            <td>${req.location_name}</td>
+const balanceQty =
+requestedQty - issuedQty;
 
-            <td>
-                ${req.materials.material_code}
-                -
-                ${req.materials.material_name}
-            </td>
+const unitCost =
+Number(req.materials?.unit_cost ?? 0);
 
-            <td>${req.requested_qty}</td>
+const amount =
+balanceQty * unitCost;
 
-            <td>
-                <input
-                    type="number"
-                    id="issue_${req.id}"
-                    value="${req.requested_qty}">
-            </td>
+tbody.innerHTML +=
 
-            <td>
+`
+<tr>
 
-                <button
-                    onclick="issueMaterial(${req.id}, ${req.material_id})">
+<td>${req.ticket_no}</td>
 
-                    Issue
+<td>${req.location_name}</td>
 
-                </button>
+<td>
 
-            </td>
+${req.materials.departments.department_name}
 
-        </tr>
+</td>
+
+<td>
+
+${req.materials.material_name}
+
+<br>
+
+<small>
+
+(${req.materials.material_code})
+
+</small>
+
+</td>
+
+<td>
+
+${requestedQty}
+
+</td>
+
+<td>
+
+${issuedQty}
+
+</td>
+
+<td>
+
+${balanceQty}
+
+</td>
+
+<td>
+
+₹${unitCost.toFixed(2)}
+
+</td>
+
+<td>
+
+₹${amount.toFixed(2)}
+
+</td>
+
+<td>
+
+<input
+type="number"
+id="issue_${req.id}"
+value="${balanceQty}"
+min="1"
+max="${balanceQty}">
+
+</td>
+
+<td>
+
+<button
+onclick="issueMaterial(${req.id},${req.material_id})">
+
+Issue
+
+</button>
+
+</td>
+
+</tr>
+
+`;
         `;
 
     });
@@ -81,6 +162,9 @@ async function issueMaterial(
         document.getElementById(
             `issue_${requestId}`
         ).value;
+    const request =
+requestData ??
+null;
 
     const { data: stockData, error: stockError } =
     await supabaseClient
@@ -119,6 +203,21 @@ if (Number(issueQty) > Number(stockData.current_stock)) {
     `)
     .eq("id", requestId)
     .single();
+    const balanceQty =
+Number(requestData.requested_qty) -
+Number(requestData.issued_qty ?? 0);
+
+if(Number(issueQty) > balanceQty){
+
+alert(
+
+"Cannot issue more than approved quantity."
+
+);
+
+return;
+
+}
 
     // Save Issue Register
 
