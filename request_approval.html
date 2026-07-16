@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Request Approval</title>
+
+<link
+rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<!-- ===================================== -->
+<!-- M29-01 : PAGE HEADER -->
+<!-- ===================================== -->
+
+<h4>
+
+<a href="index.html">
+
+Dashboard
+
+</a>
+
+>
+
+Transactions
+
+>
+
+Request Approval
+
+</h4>
+
+<hr>
+
+<h1>
+
+MATERIAL REQUEST APPROVAL
+
+</h1>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- M29-02 : SEARCH FILTER -->
+<!-- ===================================== -->
+
+<table>
+
+<tr>
+
+<td>
+
+Ticket No
+
+</td>
+
+<td>
+
+<input
+type="text"
+id="searchTicket">
+
+</td>
+
+<td>
+
+Status
+
+</td>
+
+<td>
+
+<select
+id="searchStatus">
+
+<option value="PENDING">
+
+Pending
+
+</option>
+
+<option value="APPROVED">
+
+Approved
+
+</option>
+
+<option value="REJECTED">
+
+Rejected
+
+</option>
+
+<option value="">
+
+All
+
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+<button
+onclick="loadRequests()">
+
+SEARCH
+
+</button>
+
+</td>
+
+</tr>
+
+</table>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- M29-03 : REQUEST LIST -->
+<!-- ===================================== -->
+
+<table
+border="1"
+id="requestTable"
+width="100%">
+
+<thead>
+
+<tr>
+
+<th>
+
+Ticket
+
+</th>
+
+<th>
+
+Location
+
+</th>
+
+<th>
+
+Technician
+
+</th>
+
+<th>
+
+Material
+
+</th>
+
+<th>
+
+Qty
+
+</th>
+
+<th>
+
+Status
+
+</th>
+
+<th>
+
+Action
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- M29-04 : REQUEST DETAILS -->
+<!-- ===================================== -->
+
+<div
+id="requestDetails"
+style="display:none;">
+
+<h3>
+
+Request Details
+
+</h3>
+
+<hr>
+
+<p>
+
+<b>
+
+Ticket :
+
+</b>
+
+<span id="viewTicket"></span>
+
+</p>
+
+<p>
+
+<b>
+
+Location :
+
+</b>
+
+<span id="viewLocation"></span>
+
+</p>
+
+<p>
+
+<b>
+
+Technician :
+
+</b>
+
+<span id="viewTechnician"></span>
+
+</p>
+
+<table
+border="1"
+width="100%">
+
+<thead>
+
+<tr>
+
+<th>
+
+Material
+
+</th>
+
+<th>
+
+Qty
+
+</th>
+
+<th>
+
+Remarks
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+id="detailBody">
+
+</tbody>
+
+</table>
+
+<hr>
+
+<!-- ===================================== -->
+<!-- M29-05 : ACTION BUTTONS -->
+<!-- ===================================== -->
+
+<button
+onclick="approveRequest()">
+
+APPROVE
+
+</button>
+
+<button
+onclick="rejectRequest()">
+
+REJECT
+
+</button>
+
+</div>
+
+<script src="supabase.js"></script>
+
+<script src="request_approval.js"></script>
+
+</body>
+
+</html>
