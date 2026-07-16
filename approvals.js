@@ -13,10 +13,25 @@ async function loadPendingRequests() {
         .from("material_requests")
         .select(`
             *,
-            materials (
-                material_code,
-                material_name
+
+            materials(
+
+            material_code,
+
+            material_name,
+
+            unit_cost,
+
+            department_id,
+
+            departments(
+
+            department_name
+
             )
+
+            )
+
         `)
         .eq("request_status", "PENDING")
         .order("created_at");
@@ -41,14 +56,58 @@ async function loadPendingRequests() {
             <td>${req.location_name}</td>
 
             <td>
-                ${req.materials.material_code}
-                -
-                ${req.materials.material_name}
+
+        ${req.materials.departments.department_name}
+
             </td>
 
-            <td>${req.requested_qty}</td>
+            <td>
 
-            <td>${req.request_status}</td>
+        ${req.materials.material_name}
+
+            <br>
+
+            <small>
+
+        (${req.materials.material_code})
+
+            </small>
+
+            </td>
+
+            <td>
+
+        ${req.requested_qty}
+
+    </td>
+
+    <td>
+
+    ₹${Number(
+    req.materials.unit_cost
+    ).toFixed(2)}
+
+    </td>
+
+    <td>
+
+    ₹${(
+
+    Number(req.requested_qty)
+
+*
+
+Number(req.materials.unit_cost)
+
+).toFixed(2)}
+
+</td>
+
+<td>
+
+${req.request_status}
+
+</td>
 
             <td>
 
