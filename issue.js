@@ -1,10 +1,3 @@
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
-
-loadApprovedRequests();
-
 async function loadApprovedRequests() {
 
     const { data, error } =
@@ -14,30 +7,26 @@ async function loadApprovedRequests() {
 *,
 
 materials(
-
 material_code,
-
 material_name,
-
 unit_cost,
-
 department_id,
-
 departments(
-
 department_name
-
 )
-
 )
-
 `)
         .eq("request_status", "APPROVED")
         .order("created_at");
 
     if (error) {
+
         console.error(error);
+
+        alert(error.message);
+
         return;
+
     }
 
     const tbody =
@@ -47,8 +36,84 @@ department_name
 
     data.forEach(req => {
 
-        tbody.innerHTML += `
         const issuedQty =
+            Number(req.issued_qty ?? 0);
+
+        const requestedQty =
+            Number(req.requested_qty);
+
+        const balanceQty =
+            requestedQty - issuedQty;
+
+        const unitCost =
+            Number(req.materials?.unit_cost ?? 0);
+
+        const amount =
+            balanceQty * unitCost;
+
+        tbody.innerHTML += `
+
+<tr>
+
+<td>${req.ticket_no}</td>
+
+<td>${req.location_name}</td>
+
+<td>${req.materials?.departments?.department_name ?? "-"}</td>
+
+<td>
+
+${req.materials?.material_name ?? ""}
+
+<br>
+
+<small>
+
+(${req.materials?.material_code ?? ""})
+
+</small>
+
+</td>
+
+<td>${requestedQty}</td>
+
+<td>${issuedQty}</td>
+
+<td>${balanceQty}</td>
+
+<td>₹${unitCost.toFixed(2)}</td>
+
+<td>₹${amount.toFixed(2)}</td>
+
+<td>
+
+<input
+type="number"
+id="issue_${req.id}"
+value="${balanceQty}"
+min="1"
+max="${balanceQty}">
+
+</td>
+
+<td>
+
+<button
+onclick="issueMaterial(${req.id}, ${req.material_id})">
+
+Issue
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+}
 Number(req.issued_qty ?? 0);
 
 const requestedQty =
