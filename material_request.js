@@ -412,6 +412,10 @@ requested_qty:qty,
 
 remarks:remarks,
 
+request_status:"PENDING",
+
+requested_by:1
+
 }
 ]);
 
