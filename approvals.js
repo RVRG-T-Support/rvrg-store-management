@@ -144,11 +144,20 @@ async function approveRequest(id) {
         .eq("id", id);
 
     if (error) {
-        alert(error.message);
-        return;
-    }
 
-    loadPendingRequests();
+    alert(error.message);
+
+    return;
+
+}
+
+alert(
+
+"✅ Material Request Approved Successfully"
+
+);
+
+loadPendingRequests();
 
 }
 
@@ -166,10 +175,19 @@ async function rejectRequest(id) {
         .eq("id", id);
 
     if (error) {
-        alert(error.message);
-        return;
-    }
 
-    loadPendingRequests();
+    alert(error.message);
+
+    return;
+
+}
+
+alert(
+
+"❌ Material Request Rejected"
+
+);
+
+loadPendingRequests();
 
 }
