@@ -57,35 +57,28 @@ department_name
 
 <td>${req.ticket_no}</td>
 
-<td>${req.location_name}</td>
+data.forEach(req => {
 
-<td>${req.materials?.departments?.department_name ?? "-"}</td>
+const issuedQty =
+Number(req.issued_qty ?? 0);
 
-<td>
+const requestedQty =
+Number(req.requested_qty);
 
-${req.materials?.material_name ?? ""}
+const balanceQty =
+requestedQty - issuedQty;
 
-<br>
+const unitCost =
+Number(req.materials?.unit_cost ?? 0);
 
-<small>
+const amount =
+balanceQty * unitCost;
 
-(${req.materials?.material_code ?? ""})
+tbody.innerHTML += `
 
-</small>
+<tr>
 
-</td>
-
-<td>${requestedQty}</td>
-
-<td>${issuedQty}</td>
-
-<td>${balanceQty}</td>
-
-<td>₹${unitCost.toFixed(2)}</td>
-
-<td>₹${amount.toFixed(2)}</td>
-
-<td>
+...
 
 <input
 type="number"
@@ -94,9 +87,7 @@ value="${balanceQty}"
 min="1"
 max="${balanceQty}">
 
-</td>
-
-<td>
+...
 
 <button
 onclick="issueMaterial(${req.id}, ${req.material_id})">
@@ -105,13 +96,11 @@ Issue
 
 </button>
 
-</td>
-
 </tr>
 
 `;
 
-    });
+});    });
 
 }
 Number(req.issued_qty ?? 0);
