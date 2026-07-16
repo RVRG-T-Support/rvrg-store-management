@@ -53,7 +53,56 @@ new Date()
 .toISOString()
 .split("T")[0];
 
+await loadTechnicians();
+
 await addRow();
+
+}
+
+// =====================================
+// MRJ-02C : LOAD TECHNICIANS
+// =====================================
+
+async function loadTechnicians(){
+
+const {data,error} =
+await supabaseClient
+.from("technicians")
+.select("*")
+.eq("is_active",true)
+.order("technician_name");
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+const tech =
+document.getElementById(
+"technician"
+);
+
+tech.innerHTML =
+'<option value="">Select Technician</option>';
+
+data.forEach(item=>{
+
+tech.innerHTML +=
+
+`
+
+<option value="${item.id}">
+
+${item.technician_name}
+
+</option>
+
+`;
+
+});
 
 }
 
@@ -273,9 +322,11 @@ return false;
 }
 
 const technician =
+Number(
 document.getElementById(
 "technician"
-).value.trim();
+).value
+);
 
 if(technician==""){
 
@@ -492,6 +543,10 @@ await addRow();
 document.getElementById(
 "ticketNo"
 ).focus();
+
+document.getElementById(
+"technician"
+).selectedIndex = 0;
 
 }
 
