@@ -117,7 +117,6 @@ Issue
 
     });
 
-}
 async function issueMaterial(
     requestId,
     materialId
