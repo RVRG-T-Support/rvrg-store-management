@@ -1,9 +1,13 @@
+// =====================================
+// IS-02 : LOAD APPROVED REQUESTS
+// =====================================
+
 async function loadApprovedRequests() {
 
     const { data, error } =
-        await supabaseClient
-        .from("material_requests")
-        .select(`
+    await supabaseClient
+    .from("material_requests")
+    .select(`
 *,
 
 materials(
@@ -16,10 +20,10 @@ department_name
 )
 )
 `)
-        .eq("request_status", "APPROVED")
-        .order("created_at");
+    .eq("request_status","APPROVED")
+    .order("created_at");
 
-    if (error) {
+    if(error){
 
         console.error(error);
 
@@ -29,6 +33,93 @@ department_name
 
     }
 
+    const tbody =
+    document.querySelector(
+    "#issueTable tbody"
+    );
+
+    tbody.innerHTML = "";
+
+    data.forEach(req=>{
+
+        const requestedQty =
+        Number(req.requested_qty);
+
+        const issuedQty =
+        Number(req.issued_qty ?? 0);
+
+        const balanceQty =
+        requestedQty - issuedQty;
+
+        const unitCost =
+        Number(req.materials?.unit_cost ?? 0);
+
+        const amount =
+        balanceQty * unitCost;
+
+        tbody.innerHTML += `
+
+<tr>
+
+<td>${req.ticket_no}</td>
+
+<td>${req.location_name}</td>
+
+<td>${req.materials?.departments?.department_name ?? "-"}</td>
+
+<td>
+
+${req.materials?.material_name ?? ""}
+
+<br>
+
+<small>
+
+(${req.materials?.material_code ?? ""})
+
+</small>
+
+</td>
+
+<td>${requestedQty}</td>
+
+<td>${issuedQty}</td>
+
+<td>${balanceQty}</td>
+
+<td>₹${unitCost.toFixed(2)}</td>
+
+<td>₹${amount.toFixed(2)}</td>
+
+<td>
+
+<input
+type="number"
+id="issue_${req.id}"
+value="${balanceQty}"
+min="1"
+max="${balanceQty}">
+
+</td>
+
+<td>
+
+<button
+onclick="issueMaterial(${req.id},${req.material_id})">
+
+Issue
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+}
     const tbody =
         document.querySelector("#issueTable tbody");
 
