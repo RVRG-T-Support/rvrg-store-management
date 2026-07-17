@@ -7,17 +7,15 @@ async function loadApprovedRequests() {
     const { data, error } =
     await supabaseClient
     .from("material_requests")
-    .select(`
-*,
-
+   .select(`
+ticket_no,
+location_name,
+technician_id,
+material_id,
+requested_qty,
+issued_qty,
 materials(
-material_code,
-material_name,
-unit_cost,
-department_id,
-departments(
-department_name
-)
+unit_cost
 )
 `)
     .eq("request_status","APPROVED")
@@ -120,8 +118,6 @@ Issue
     });
 
 }
-
-}
 async function issueMaterial(
     requestId,
     materialId
@@ -131,8 +127,6 @@ async function issueMaterial(
         document.getElementById(
             `issue_${requestId}`
         ).value;
-null;
-
     const { data: stockData, error: stockError } =
     await supabaseClient
     .from("current_stock")
@@ -223,7 +217,13 @@ const { error: issueRegisterError } =
 
         technician_id: requestData.technician_id,
 
-        issued_qty: issueQty,
+        issued_qty:
+
+        Number(requestData.issued_qty ?? 0)
+
+        +
+
+        Number(issueQty)
 
         unit_cost: unitCost,
 
