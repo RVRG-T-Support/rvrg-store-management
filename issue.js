@@ -169,8 +169,6 @@ tbody.innerHTML += `
 
 <tr>
 
-...
-
 <input
 type="number"
 id="issue_${req.id}"
