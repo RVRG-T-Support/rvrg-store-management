@@ -167,7 +167,41 @@ balanceQty * unitCost;
 
 tbody.innerHTML += `
 
+tbody.innerHTML += `
+
 <tr>
+
+<td>${req.ticket_no}</td>
+
+<td>${req.location_name}</td>
+
+<td>${req.materials?.departments?.department_name ?? "-"}</td>
+
+<td>
+
+${req.materials?.material_name ?? ""}
+
+<br>
+
+<small>
+
+(${req.materials?.material_code ?? ""})
+
+</small>
+
+</td>
+
+<td>${requestedQty}</td>
+
+<td>${issuedQty}</td>
+
+<td>${balanceQty}</td>
+
+<td>₹${unitCost.toFixed(2)}</td>
+
+<td>₹${amount.toFixed(2)}</td>
+
+<td>
 
 <input
 type="number"
@@ -176,7 +210,9 @@ value="${balanceQty}"
 min="1"
 max="${balanceQty}">
 
-...
+</td>
+
+<td>
 
 <button
 onclick="issueMaterial(${req.id}, ${req.material_id})">
@@ -185,11 +221,13 @@ Issue
 
 </button>
 
+</td>
+
 </tr>
 
 `;
 
-});    });
+}); 
 
 }
 Number(req.issued_qty ?? 0);
