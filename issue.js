@@ -37,4 +37,31 @@ async function loadApprovedRequests(){
 
     console.log("Error :", error);
 
+    const tbody =
+document.querySelector("#issueTable tbody");
+
+tbody.innerHTML = "";
+
+data.forEach(req => {
+
+tbody.innerHTML += `
+
+<tr>
+
+<td>${req.ticket_no}</td>
+
+<td>${req.location_name}</td>
+
+<td>${req.material_id}</td>
+
+<td>${req.requested_qty}</td>
+
+<td>${req.issued_qty}</td>
+
+</tr>
+
+`;
+
+});
+
 }
