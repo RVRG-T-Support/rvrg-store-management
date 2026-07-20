@@ -92,18 +92,4 @@ Issue
 
 `;
 
-}<td>${req.location_name}</td>
-
-<td>${req.material_id}</td>
-
-<td>${req.requested_qty}</td>
-
-<td>${req.issued_qty}</td>
-
-</tr>
-
-`;
-
-});
-
 }
