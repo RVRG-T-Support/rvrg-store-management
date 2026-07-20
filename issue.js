@@ -29,4 +29,14 @@ async function loadApprovedRequests(){
     console.log("IS-02 Started");
 
 }
+console.log("IS-02 Started");
 
+const { data, error } =
+await supabaseClient
+.from("material_requests")
+.select("*")
+.limit(5);
+
+console.log("Data :", data);
+
+console.log("Error :", error);
