@@ -237,82 +237,48 @@ const { error: issueRegisterError } =
 
         location_name: requestData.location_name,
 
-        technician_id: requestData.technician_id,
+ technician_id: requestData.technician_id,
 
-        const newIssuedQty =
+issued_qty: Number(issueQty),
 
-Number(requestData.issued_qty ?? 0)
+unit_cost: unitCost,
 
-+
+total_cost: totalCost,
 
-Number(issueQty);
+issued_by: "Store Keeper",
 
-const newStatus =
+remarks: "Material Issued"
 
-newIssuedQty >=
-Number(requestData.requested_qty)
+});
 
-?
-
-"ISSUED"
-
-:
-
-"PARTIAL";
-
-const {error:requestError} =
-
-await supabaseClient
-
-.from("material_requests")
+// =====================================
+// IS-05 : UPDATE REQUEST
+// =====================================
 
 const newIssuedQty =
-
 Number(requestData.issued_qty ?? 0)
-
 +
-
 Number(issueQty);
 
 const newStatus =
-
-newIssuedQty >=
-Number(requestData.requested_qty)
-
+newIssuedQty >= Number(requestData.requested_qty)
 ?
-
 "ISSUED"
-
 :
-
 "PARTIAL";
 
-const {error:requestError} =
-
+const { error: requestError } =
 await supabaseClient
-
 .from("material_requests")
-
 .update({
 
-request_status:newStatus,
+request_status: newStatus,
 
-issued_qty:newIssuedQty
+issued_qty: newIssuedQty
 
 })
-
-.eq("id",requestId);
-
-.eq("id",requestId);
-
-        total_cost: totalCost,
-
-        issued_by: "Store Keeper",
-
-        remarks: "Material Issued"
-
-    });
-
+.eq("id", requestId);
+    
 if (issueRegisterError) {
 
     alert(issueRegisterError.message);
@@ -370,7 +336,6 @@ issued_qty: newIssuedQty
 
 })
 .eq("id", requestId);
-        .eq("id", requestId);
 
     if (requestError) {
 
@@ -381,7 +346,7 @@ issued_qty: newIssuedQty
 
     alert(
 
-"✅ Material Issued Successfully\n\n"+
+"✅ Material Issued Successfully\n\n"+ .
 
 "Ticket : "+
 
