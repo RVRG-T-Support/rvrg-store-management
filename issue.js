@@ -7,6 +7,7 @@ async function loadApprovedRequests() {
     const { data, error } =
     await supabaseClient
     .from("material_requests")
+        
    .select(`
 id,
 request_date,
@@ -30,6 +31,10 @@ department_name
 `)
     .eq("request_status","APPROVED")
     .order("created_at");
+
+    console.log("Approved Requests", data);
+
+    console.log("Query Error", error);
 
     if(error){
 
