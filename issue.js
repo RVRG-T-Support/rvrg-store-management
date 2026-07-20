@@ -3,7 +3,6 @@
 // ISSUE MODULE V2
 // M-01 : INITIAL SETUP
 // =====================================
-
 const supabaseClient =
 supabase.createClient(
 SUPABASE_URL,
@@ -17,23 +16,25 @@ SUPABASE_ANON_KEY
 window.onload = async function(){
 
     await loadApprovedRequests();
-
 };
+
 // =====================================
 // IS-02 : LOAD APPROVED REQUESTS
 // =====================================
-
 async function loadApprovedRequests(){
 
     console.log("IS-02 Started");
 
-const { data, error } =
-await supabaseClient
-.from("material_requests")
-.select("*")
-.limit(5);
+    const { data, error } =
+    await supabaseClient
+    .from("material_requests")
+    .select("*")
+    .eq("request_status","APPROVED");
 
-console.log("Data :", data);
+    console.table(data);
 
-console.log("Error :", error);
+    console.log("Data :", data);
+
+    console.log("Error :", error);
+
 }
