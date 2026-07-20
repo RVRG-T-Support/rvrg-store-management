@@ -38,8 +38,8 @@ async function loadApprovedRequests(){
     console.log("Error :", error);
 
     const tbody =
-for (const req of data) {
-
+for (const req of data)
+{
 const balance =
 Number(req.requested_qty) -
 Number(req.issued_qty ?? 0);
