@@ -4,33 +4,11 @@
 
 async function loadApprovedRequests() {
 
-    const { data, error } =
-    await supabaseClient
-    .from("material_requests")
-        
-   .select(`
-id,
-request_date,
-ticket_no,
-location_name,
-technician_id,
-material_id,
-requested_qty,
-issued_qty,
-request_status,
-
-materials(
-material_code,
-material_name,
-unit_cost,
-department_id,
-departments(
-department_name
-)
-)
-`)
-    .eq("request_status","APPROVED")
-    .order("created_at");
+const { data, error } =
+await supabaseClient
+.from("material_requests")
+.select("*")
+.eq("request_status","APPROVED");
 
     console.log("Approved Requests", data);
 
