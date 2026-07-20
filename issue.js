@@ -349,13 +349,27 @@ if (issueRegisterError) {
 
     }
 
-    const { error: requestError } =
-        await supabaseClient
-        .from("material_requests")
-        .update({
-            request_status: "ISSUED",
-            issued_qty: issueQty
-        })
+   const newIssuedQty =
+Number(requestData.issued_qty ?? 0)
++
+Number(issueQty);
+
+const newStatus =
+newIssuedQty >= Number(requestData.requested_qty)
+? "ISSUED"
+: "PARTIAL";
+
+const { error: requestError } =
+await supabaseClient
+.from("material_requests")
+.update({
+
+request_status: newStatus,
+
+issued_qty: newIssuedQty
+
+})
+.eq("id", requestId);
         .eq("id", requestId);
 
     if (requestError) {
