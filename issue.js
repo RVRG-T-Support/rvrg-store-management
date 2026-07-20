@@ -134,6 +134,7 @@ Issue
 `;
 
     });
+}
 
 async function issueMaterial(
     requestId,
@@ -172,7 +173,8 @@ if (Number(issueQty) > Number(stockData.current_stock)) {
     const { data: requestData, error: requestLookupError } =
     await supabaseClient
     .from("material_requests")
-    .select(`
+ .select(`
+request_date,
 ticket_no,
 location_name,
 technician_id,
@@ -250,34 +252,6 @@ issued_by: "Store Keeper",
 remarks: "Material Issued"
 
 });
-
-// =====================================
-// IS-05 : UPDATE REQUEST
-// =====================================
-
-const newIssuedQty =
-Number(requestData.issued_qty ?? 0)
-+
-Number(issueQty);
-
-const newStatus =
-newIssuedQty >= Number(requestData.requested_qty)
-?
-"ISSUED"
-:
-"PARTIAL";
-
-const { error: requestError } =
-await supabaseClient
-.from("material_requests")
-.update({
-
-request_status: newStatus,
-
-issued_qty: newIssuedQty
-
-})
-.eq("id", requestId);
     
 if (issueRegisterError) {
 
@@ -314,6 +288,33 @@ if (issueRegisterError) {
         return;
 
     }
+// =====================================
+// IS-05 : UPDATE REQUEST
+// =====================================
+
+const newIssuedQty =
+Number(requestData.issued_qty ?? 0)
++
+Number(issueQty);
+
+const newStatus =
+newIssuedQty >= Number(requestData.requested_qty)
+?
+"ISSUED"
+:
+"PARTIAL";
+
+const { error: requestError } =
+await supabaseClient
+.from("material_requests")
+.update({
+
+request_status: newStatus,
+
+issued_qty: newIssuedQty
+
+})
+.eq("id", requestId);
 
    const newIssuedQty =
 Number(requestData.issued_qty ?? 0)
@@ -363,5 +364,6 @@ newStatus
 );
 
     loadApprovedRequests();
+    return;
 
 }
