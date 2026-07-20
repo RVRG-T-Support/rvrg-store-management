@@ -316,28 +316,6 @@ issued_qty: newIssuedQty
 })
 .eq("id", requestId);
 
-   const newIssuedQty =
-Number(requestData.issued_qty ?? 0)
-+
-Number(issueQty);
-
-const newStatus =
-newIssuedQty >= Number(requestData.requested_qty)
-? "ISSUED"
-: "PARTIAL";
-
-const { error: requestError } =
-await supabaseClient
-.from("material_requests")
-.update({
-
-request_status: newStatus,
-
-issued_qty: newIssuedQty
-
-})
-.eq("id", requestId);
-
     if (requestError) {
 
         alert(requestError.message);
@@ -347,7 +325,7 @@ issued_qty: newIssuedQty
 
     alert(
 
-"✅ Material Issued Successfully\n\n"+ .
+"✅ Material Issued Successfully\n\n"+
 
 "Ticket : "+
 
