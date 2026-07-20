@@ -36,3 +36,4 @@ await supabaseClient
 console.log("Data :", data);
 
 console.log("Error :", error);
+}
