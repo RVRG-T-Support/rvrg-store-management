@@ -8,14 +8,24 @@ async function loadApprovedRequests() {
     await supabaseClient
     .from("material_requests")
    .select(`
+id,
+request_date,
 ticket_no,
 location_name,
 technician_id,
 material_id,
 requested_qty,
 issued_qty,
+request_status,
+
 materials(
-unit_cost
+material_code,
+material_name,
+unit_cost,
+department_id,
+departments(
+department_name
+)
 )
 `)
     .eq("request_status","APPROVED")
@@ -58,6 +68,14 @@ unit_cost
         tbody.innerHTML += `
 
 <tr>
+
+<td>
+
+${new Date(
+req.request_date
+).toLocaleDateString("en-GB")}
+
+</td>
 
 <td>${req.ticket_no}</td>
 
@@ -155,12 +173,17 @@ if (Number(issueQty) > Number(stockData.current_stock)) {
     await supabaseClient
     .from("material_requests")
     .select(`
-        ticket_no,
-        location_name,
-        technician_id,
-        material_id,
-        materials(unit_cost)
-    `)
+ticket_no,
+location_name,
+technician_id,
+material_id,
+requested_qty,
+issued_qty,
+
+materials(
+unit_cost
+)
+`)
     .eq("id", requestId)
     .single();
     const balanceQty =
@@ -216,15 +239,71 @@ const { error: issueRegisterError } =
 
         technician_id: requestData.technician_id,
 
-        issued_qty:
+        const newIssuedQty =
 
-        Number(requestData.issued_qty ?? 0)
+Number(requestData.issued_qty ?? 0)
 
-        +
++
 
-        Number(issueQty)
+Number(issueQty);
 
-        unit_cost: unitCost,
+const newStatus =
+
+newIssuedQty >=
+Number(requestData.requested_qty)
+
+?
+
+"ISSUED"
+
+:
+
+"PARTIAL";
+
+const {error:requestError} =
+
+await supabaseClient
+
+.from("material_requests")
+
+const newIssuedQty =
+
+Number(requestData.issued_qty ?? 0)
+
++
+
+Number(issueQty);
+
+const newStatus =
+
+newIssuedQty >=
+Number(requestData.requested_qty)
+
+?
+
+"ISSUED"
+
+:
+
+"PARTIAL";
+
+const {error:requestError} =
+
+await supabaseClient
+
+.from("material_requests")
+
+.update({
+
+request_status:newStatus,
+
+issued_qty:newIssuedQty
+
+})
+
+.eq("id",requestId);
+
+.eq("id",requestId);
 
         total_cost: totalCost,
 
@@ -286,7 +365,23 @@ if (issueRegisterError) {
 
     }
 
-    alert("Material Issued");
+    alert(
+
+"✅ Material Issued Successfully\n\n"+
+
+"Ticket : "+
+
+requestData.ticket_no+
+
+"\nIssued Qty : "+
+
+issueQty+
+
+"\nStatus : "+
+
+newStatus
+
+);
 
     loadApprovedRequests();
 
