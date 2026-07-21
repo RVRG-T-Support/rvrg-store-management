@@ -73,16 +73,15 @@ async function loadApprovedRequests() {
                         technician_name
                     ),
 
-                    materials(
-                        material_id,
+                   materials(
+                        id,
                         material_name,
                         material_code,
                         unit_cost,
-
                         departments(
-                            department_name
+                        department_name
+                            )
                         )
-                    )
                 `)
 
                 .in("request_status",
@@ -145,9 +144,9 @@ async function renderIssueTable() {
     for (const request of approvedRequests) {
 
         const stock =
-            await getCurrentStock(
-                request.materials.material_id
-            );
+        await getCurrentStock(
+        request.materials.id
+        );
 
         const requested =
             Number(request.requested_qty || 0);
