@@ -26,7 +26,8 @@
 
 <h1>Department Consumption Report</h1>
 
-    Refresh Report
+ <button id="refreshIssueBtn">
+    Refresh Requests
 </button>
 
 <h1>Issue Material</h1>
@@ -66,10 +67,12 @@
 <th>Issue Qty</th>
 
 <th>Action</th>
+
+<th>Stock</th>
         </tr>
     </thead>
 
-    <tbody></tbody>
+    <tbody id="issueTableBody"></tbody>
 
 </table>
 
@@ -82,8 +85,6 @@
 <script src="database.js"></script>
 
 <script src="issue.js"></script>
-
-</body>
 
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 
