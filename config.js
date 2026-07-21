@@ -19,3 +19,11 @@ const CURRENT_USER = {
 // AFM
 // FM
 // ADMIN
+// ======================================================
+// SUPABASE CLIENT
+// ======================================================
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
